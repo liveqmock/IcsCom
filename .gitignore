@@ -1,5 +1,6 @@
 *.bak
 classes/*
+dist/*
 *.tar
 *.rar
 *.tmp
