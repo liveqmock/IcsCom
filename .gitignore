@@ -1,0 +1,8 @@
+*.bak
+classes/*
+*.tar
+*.rar
+*.tmp
+.project
+.classpath
+.settings/*
