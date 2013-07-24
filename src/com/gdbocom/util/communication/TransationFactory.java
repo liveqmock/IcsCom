@@ -1,7 +1,6 @@
 package com.gdbocom.util.communication;
 
 import com.gdbocom.util.communication.custom.gds.*;
-import com.gdbocom.util.communication.custom.lsha.*;
 
 /**
  * Transation的工厂类，创建不同交易和交易码的拼包与解包Transation类，不同的
@@ -28,7 +27,6 @@ public class TransationFactory {
      */
     public static Transation createTransation(int transationCode){
         switch(transationCode){
-            case TransationFactory.LSHA482150: return new Lsha482150();
             case TransationFactory.GDSPubData: return new GdsPubData();
             case TransationFactory.GDS469901: return new Gds469901();
             case TransationFactory.GDS469998: return new Gds469998();

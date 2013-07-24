@@ -34,6 +34,9 @@ public class GdsPubData extends Transation {
     public static String contactPHS    = "4";
     public static String contactTianyi = "5";
 
+    /* 支付行号 */
+    public static String bankNo   = "30158100019";
+
 
     protected byte[] buildRequestBody(Map request)
             throws UnsupportedEncodingException {
@@ -106,19 +109,64 @@ public class GdsPubData extends Transation {
         }
     }
 
+    /**
+     * 返回能够签约的业务列表
+     * @return
+     */
     public static Map getSignBusiness(){
         Map business = new HashMap();
         //移动划扣直接使用全品牌划扣
-        //business.put(GdsPubData.businessOfMobile, "移动划扣");
+        business.put(GdsPubData.businessOfMobile, "移动划扣");
         business.put(GdsPubData.businessOfUnicom, "联通划扣");
-        business.put(GdsPubData.businessOfTele, "电信划扣");
+        //business.put(GdsPubData.businessOfTele, "电信划扣");
         business.put(GdsPubData.businessOfProvTv, "省有线电视划扣");
         business.put(GdsPubData.businessOfCityTv,
                 "市有线电视（珠江数码）划扣");
-        business.put(GdsPubData.businessOfGas, "燃气划扣");
+        //business.put(GdsPubData.businessOfGas, "燃气划扣");
         business.put(GdsPubData.businessOfWater, "水费划扣");
         //排除电费划扣
         //business.put(GdsPubData.businessOfElectricity, "电费划扣");
         return business;
     }
+
+    /**
+     * 返回企业代码列表
+     * @return
+     */
+    public static Map getBCusId(){
+        /* 企业代码 */
+        Map bCusId = new HashMap();
+        /* 初始化企业代码 */
+        bCusId.put(GdsPubData.businessOfWater       , "190426853");
+        bCusId.put(GdsPubData.businessOfMobile      , "618652334");
+        bCusId.put(GdsPubData.businessOfUnicom      , "890346651");
+        bCusId.put(GdsPubData.businessOfTele        , "0");
+        bCusId.put(GdsPubData.businessOfGas         , "0");
+        bCusId.put(GdsPubData.businessOfElectricity , "0");
+        bCusId.put(GdsPubData.businessOfProvTv      , "726482280");
+        bCusId.put(GdsPubData.businessOfCityTv      , "190498531");
+
+        return bCusId;
+    }
+
+    /**
+     * 返回业务类型列表
+     * @return
+     */
+    public static Map getTBusTp(){
+        /* 业务类型 */
+        Map tBusTp = new HashMap();
+        /* 初始化业务类型 */
+        tBusTp.put(GdsPubData.businessOfWater       , "00201");
+        tBusTp.put(GdsPubData.businessOfMobile      , "00403");
+        tBusTp.put(GdsPubData.businessOfUnicom      , "00500");
+        tBusTp.put(GdsPubData.businessOfTele        , "0");
+        tBusTp.put(GdsPubData.businessOfGas         , "0");
+        tBusTp.put(GdsPubData.businessOfElectricity , "0");
+        tBusTp.put(GdsPubData.businessOfProvTv      , "01000");
+        tBusTp.put(GdsPubData.businessOfCityTv      , "91001");
+
+        return tBusTp;
+    }
+
 }

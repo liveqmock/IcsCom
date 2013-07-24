@@ -61,13 +61,16 @@ public class Gds469998 extends Transation {
         //报文头字段
         request.put("TTxnCd", "469998");
         request.put("FeCod", "469998");
-        request.put("TxnSrc", "MB441");
+        //request.put("TxnSrc", "MB441");
         //报文体字段
         request.put("ActNo", "6222600710007815865");
 
-        Transation.exchangeData(IcsServer.getServer("@GDS"),
-                request,
+        Map responseMap = Transation
+                .exchangeData(IcsServer.getServer("@GDS"),
+                (Map)request,
                 TransationFactory.GDS469998);
+        System.out.println(responseMap.get("TCusId"));
+        System.out.println(responseMap.get("IdNo"));
 
     }
 }

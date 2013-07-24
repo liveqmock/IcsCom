@@ -130,12 +130,14 @@ public class Gds469901 extends Transation {
 		// 报文头字段
 		request.put("TTxnCd", "469901");
 		request.put("FeCod", "469901");
-		request.put("TxnSrc", "MB441");
+		//request.put("TxnSrc", "MB441");
 		// 报文体GdsPub字段
-		request.put("Func", GdsPubData.functionAdd);
+		request.put("Func", GdsPubData.functionQuery);
 		// request.put("Func", GdsPubData.functionQuery);
 		request.put("GdsBId", String.valueOf(GdsPubData.businessOfProvTv));
-		request.put("ActNo", "6222600710007815865");
+		//request.put("ActNo", "6222600710007800000");
+        //request.put("ActNo", "6222600710007815865");
+        request.put("ActNo", "60142890710180319");
 		// request.put("ActTyp", ); //账户性质已经写死太平洋卡4
 		/*
 		 * request.put("ActNm", "顾启明"); //request.put("VchTyp", );
@@ -153,18 +155,22 @@ public class Gds469901 extends Transation {
 		 */
 		// request.put("IExtFg", );
 		// 水费44101I字段
-		request.put("BnkNo", "441118");
+		/*request.put("BnkNo", "441118");
 		request.put("OrgCod", "726482280");
 		request.put("TBusTp", "00505");
 		request.put("TCusId", "123456");
 		request.put("TCusNm", "顾启明");
 		request.put("GdsAId", "01" + "5810" + "190426853" + "00201" + "301"
 				+ "6222600710007815865");
-		request.put("EffDat", "20130615");
+		request.put("EffDat", "20130615");*/
 
-		Map test = Transation.exchangeData(IcsServer.getServer("@GDS"),
-				request, TransationFactory.GDS469901);
-		System.out.println(test);
+        Map responseSt = Transation
+                .exchangeData(IcsServer.getServer("@GDS"),
+                        request, TransationFactory.GDS469901);
+        ;
+
+        System.out.println(responseSt);
+		System.out.println("0 ".equals((String)responseSt.get("RecNum")));
 		// Gds469901 test = new Gds469901();
 		// for(int i=130; i<199; i++){
 		// System.out.println(i+":"+test.telNum2telType(i+"70959854"));

@@ -25,8 +25,11 @@ public class ConfigProps extends Properties {
                 if (null == INSTANCE) {
                     INSTANCE = new ConfigProps();
                     try {
-                        InputStream is = ClassLoader
-                                .getSystemResourceAsStream("config.properties");
+                        InputStream is = Thread.currentThread()
+                              .getContextClassLoader()
+                              .getResourceAsStream("config.properties");
+                        /*InputStream is = ClassLoader
+                                .getSystemResourceAsStream("config.properties");*/
                         INSTANCE.load(is);
 
                     } catch (Exception e) {

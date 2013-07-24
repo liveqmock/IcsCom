@@ -6,6 +6,8 @@ import java.net.UnknownHostException;
 import java.util.Map;
 import java.util.HashMap;
 
+import com.viatt.util.GzLog;
+
 /**
  * 实现通讯报文与表单项之间的互相转换
  * 
@@ -13,6 +15,8 @@ import java.util.HashMap;
  * 
  */
 public abstract class Transation {
+
+    private static GzLog gzLog = new GzLog("c:/gzLog_sj");
 
     /**
      * 通讯报文适配器，将完成发送表单项与通讯报文间的转换、通讯功能。
@@ -35,16 +39,15 @@ public abstract class Transation {
                 .createTransation(transationFactoryType);
         // 通过表单项获取通讯报文
         byte[] requestPacket = ts.buildRequestPacket(request);
-        System.out.println("---------------------");
-        System.out.println("发送报文：" + new String(requestPacket, "GBK"));
+        gzLog.Write("---------------------");
+        gzLog.Write("发送报文：" + new String(requestPacket, "GBK"));
         // 通讯
         byte[] responsePacket = server.send(requestPacket);
-        System.out.println("接收报文：" + new String(responsePacket, "GBK"));
-        System.out.println("---------------------");
+        gzLog.Write("接收报文：" + new String(responsePacket, "GBK"));
+        gzLog.Write("---------------------");
 
         // 通过通讯返回报文得到Map值
         Map response = ts.parseResponseMap(responsePacket);
-        // System.out.println(response);
         return response;
     }
 
@@ -80,7 +83,7 @@ public abstract class Transation {
                 { "TTxnCd", "%-6s", FieldSource.VAR },
                 { "FeCod", "%-6s", FieldSource.VAR },
                 { "TrmNo", "%-7s", FieldSource.PROPS },
-                { "TxnSrc", "%-5s", FieldSource.VAR },
+                { "TxnSrc", "%-5s", FieldSource.PROPS },
                 { "NodTrc", "%-15s", "0" },
                 { "TlrId", "%-7s", FieldSource.PROPS },
                 { "TIATyp", "%-1s", "T" },
