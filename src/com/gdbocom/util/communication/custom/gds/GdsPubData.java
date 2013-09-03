@@ -18,8 +18,8 @@ public class GdsPubData extends Transation {
 
     /* 企业种类 */
     public static String businessOfWater       = "44101";
-    public static String businessOfMobile      = "44102";
-    public static String businessOfUnicom      = "44103";
+    public static String businessOfMobile      = "44103";
+    public static String businessOfUnicom      = "44102";
     public static String businessOfTele        = "44104";
     public static String businessOfGas         = "44105";
     public static String businessOfElectricity = "44106";

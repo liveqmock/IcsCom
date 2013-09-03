@@ -93,22 +93,45 @@ public class Gds469901 extends Transation {
 	private byte[] buildAddOrUpdateRequestBody(Map request)
 			throws UnsupportedEncodingException {
 
-		Object[][] format = {
-				{ "BnkTyp", "%-2s", "16" }, // 银行类型,客户输入：bank*
-				{ "BnkNo", "%-12s", FieldSource.VAR }, // 银行行号,客户输入
-				{ "InNum", "%-2s", "1" }, // 笔数,固定签约一笔
-				{ "SubSts", "%-1s", "0" }, // 状态,0:有效
-				{ "OrgCod", "%-12s", FieldSource.VAR }, // 代收单位编码,469997返回
-				{ "TBusTp", "%-5s", FieldSource.VAR }, // 业务类型,469997返回
-				{ "TCusId", "%-20s", FieldSource.VAR }, // 用户标识,客户输入
-				{ "TCusNm", "%-60s", FieldSource.VAR }, // 用户名称，客户输入
-				// 协议号，规则：
-				// 01+469997CityCd+469997OrgCod+469997TBusTp+301+卡号
-				{ "GdsAId", "%-55s", FieldSource.VAR },
-				{ "EffDat", "%-8s", FieldSource.VAR }, // 生效日期
-				{ "IvdDat", "%-8s", "99991231" }, // 失效日期
-		};
-		return Transation.packetSequence(request, format);
+        if(GdsPubData.businessOfMobile
+                .equals((String)request.get("GdsBId"))){
+            Object[][] format = {
+                    { "BnkTyp", "%-2s", "16" }, // 银行类型,客户输入：bank*
+                    { "BnkNo", "%-12s", FieldSource.VAR }, // 银行行号,客户输入
+                    { "InNum", "%-2s", "1" }, // 笔数,固定签约一笔
+                    { "SubSts", "%-1s", "0" }, // 状态,0:有效
+                    { "OrgCod", "%-12s", FieldSource.VAR }, // 代收单位编码,469997返回
+                    { "TBusTp", "%-5s", FieldSource.VAR }, // 业务类型,469997返回
+                    { "TAgtTp", "%-1s", FieldSource.VAR }, // 签约类型,客户输入
+                    { "MCusId", "%-20s", FieldSource.VAR }, // 用户标识（主号）,客户输入
+                    { "TCusId", "%-20s", FieldSource.VAR }, // 用户标识（副号），客户输入
+                    // 协议号，规则：
+                    // 01+469997CityCd+469997OrgCod+469997TBusTp+301+卡号
+                    { "GdsAId", "%-55s", FieldSource.VAR },
+                    { "EffDat", "%-8s", FieldSource.VAR }, // 生效日期
+                    { "IvdDat", "%-8s", "99991231" }, // 失效日期
+            };
+            return Transation.packetSequence(request, format);
+
+        }else{
+            Object[][] format = {
+                    { "BnkTyp", "%-2s", "16" }, // 银行类型,客户输入：bank*
+                    { "BnkNo", "%-12s", FieldSource.VAR }, // 银行行号,客户输入
+                    { "InNum", "%-2s", "1" }, // 笔数,固定签约一笔
+                    { "SubSts", "%-1s", "0" }, // 状态,0:有效
+                    { "OrgCod", "%-12s", FieldSource.VAR }, // 代收单位编码,469997返回
+                    { "TBusTp", "%-5s", FieldSource.VAR }, // 业务类型,469997返回
+                    { "TCusId", "%-20s", FieldSource.VAR }, // 用户标识,客户输入
+                    { "TCusNm", "%-60s", FieldSource.VAR }, // 用户名称，客户输入
+                    // 协议号，规则：
+                    // 01+469997CityCd+469997OrgCod+469997TBusTp+301+卡号
+                    { "GdsAId", "%-55s", FieldSource.VAR },
+                    { "EffDat", "%-8s", FieldSource.VAR }, // 生效日期
+                    { "IvdDat", "%-8s", "99991231" }, // 失效日期
+            };
+            return Transation.packetSequence(request, format);
+
+        }
 	}
 
 	/**
