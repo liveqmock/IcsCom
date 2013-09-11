@@ -116,16 +116,16 @@ public class GdsPubData extends Transation {
     public static Map getSignBusiness(){
         Map business = new HashMap();
         //移动划扣直接使用全品牌划扣
-        business.put(GdsPubData.businessOfMobile, "移动划扣");
-        business.put(GdsPubData.businessOfUnicom, "联通划扣");
-        //business.put(GdsPubData.businessOfTele, "电信划扣");
-        business.put(GdsPubData.businessOfProvTv, "省有线电视划扣");
+        business.put(GdsPubData.businessOfMobile, "移动签约");
+        business.put(GdsPubData.businessOfUnicom, "联通签约");
+        //business.put(GdsPubData.businessOfTele, "电信签约");
+        business.put(GdsPubData.businessOfProvTv, "省有线电视签约");
         business.put(GdsPubData.businessOfCityTv,
-                "市有线电视（珠江数码）划扣");
-        //business.put(GdsPubData.businessOfGas, "燃气划扣");
-        business.put(GdsPubData.businessOfWater, "水费划扣");
+                "市有线电视（珠江数码）签约");
+        //business.put(GdsPubData.businessOfGas, "燃气签约");
+        business.put(GdsPubData.businessOfWater, "水费签约");
         //排除电费划扣
-        //business.put(GdsPubData.businessOfElectricity, "电费划扣");
+        //business.put(GdsPubData.businessOfElectricity, "电费签约");
         return business;
     }
 
