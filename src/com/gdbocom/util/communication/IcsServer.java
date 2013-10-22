@@ -4,7 +4,7 @@ import java.io.*;
 import java.net.Socket;
 import java.net.UnknownHostException;
 
-import com.viatt.util.GzLog;
+import com.gdbocom.util.waste.WasteLog;
 
 /**
  * IcsServer类用于针对ICS服务器进行通讯
@@ -16,7 +16,7 @@ public class IcsServer {
     private String host;
     private int post;
 
-    private GzLog gzLog = new GzLog("c:/gzLog_sj");
+    private WasteLog wasteLog = new WasteLog("c:/gzLog_sj");
 
     /**
      * 通过指定主机ip和端口创建IcsServer实例
@@ -85,7 +85,7 @@ public class IcsServer {
             byte[] responsePreLength = new byte[preLength];
             int islen = is.read(responsePreLength);
             if (islen <= 0) {
-                gzLog.Write(new String("对方无返回!".getBytes("UTF-8"),
+                wasteLog.Write(new String("对方无返回!".getBytes("UTF-8"),
                         "GBK"));
                 throw new IOException();
             }
