@@ -115,7 +115,7 @@ public class GdsPubData extends Transation {
      */
     public static Map getSignBusiness(){
         Map business = new HashMap();
-        //移动划扣直接使用全品牌划扣
+        //一期上线没有报备移动签约，先行注释
         //business.put(GdsPubData.businessOfMobile, "移动签约");
         business.put(GdsPubData.businessOfUnicom, "联通签约");
         //business.put(GdsPubData.businessOfTele, "电信签约");
