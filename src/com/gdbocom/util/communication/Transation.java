@@ -6,7 +6,7 @@ import java.net.UnknownHostException;
 import java.util.Map;
 import java.util.HashMap;
 
-import com.viatt.util.GzLog;
+import com.gdbocom.util.waste.WasteLog;
 
 /**
  * 实现通讯报文与表单项之间的互相转换
@@ -16,7 +16,7 @@ import com.viatt.util.GzLog;
  */
 public abstract class Transation {
 
-    private static GzLog gzLog = new GzLog("c:/gzLog_sj");
+    private static WasteLog wasteLog = new WasteLog("c:/gzLog_sj");
 
     /**
      * 通讯报文适配器，将完成发送表单项与通讯报文间的转换、通讯功能。
@@ -39,12 +39,12 @@ public abstract class Transation {
                 .createTransation(transationFactoryType);
         // 通过表单项获取通讯报文
         byte[] requestPacket = ts.buildRequestPacket(request);
-        gzLog.Write("---------------------");
-        gzLog.Write("发送报文：" + new String(requestPacket, "GBK"));
+        wasteLog.Write("---------------------");
+        wasteLog.Write("发送报文：" + new String(requestPacket, "GBK"));
         // 通讯
         byte[] responsePacket = server.send(requestPacket);
-        gzLog.Write("接收报文：" + new String(responsePacket, "GBK"));
-        gzLog.Write("---------------------");
+        wasteLog.Write("接收报文：" + new String(responsePacket, "GBK"));
+        wasteLog.Write("---------------------");
 
         // 通过通讯返回报文得到Map值
         Map response = ts.parseResponseMap(responsePacket);
