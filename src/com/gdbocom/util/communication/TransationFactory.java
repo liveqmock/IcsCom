@@ -19,6 +19,12 @@ public class TransationFactory {
     public static final int GDS469901 = 3;
     /** GDS应用的469998交易的代号 */
     public static final int GDS469998 = 4;
+    /** WEL应用的485404交易的代号 */
+    public static final int WEL485404 = 5;
+    /** WEL应用的485405交易的代号 */
+    public static final int WEL485405 = 6;
+    /** WEL应用的485412交易的代号 */
+    public static final int WEL485412 = 7;
 
     /**
      * 根据不同的交易代号，返回不同的拼解包类。
@@ -30,6 +36,9 @@ public class TransationFactory {
             case TransationFactory.GDSPubData: return new GdsPubData();
             case TransationFactory.GDS469901: return new Gds469901();
             case TransationFactory.GDS469998: return new Gds469998();
+            case TransationFactory.WEL485404: return new Wel485404();
+            case TransationFactory.WEL485405: return new Wel485405();
+            case TransationFactory.WEL485412: return new Wel485412();
             default: return null;
         }
     }

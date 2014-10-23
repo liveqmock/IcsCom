@@ -3,9 +3,10 @@ package com.gdbocom.util.communication;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.net.UnknownHostException;
+import java.util.Enumeration;
 import java.util.Map;
 import java.util.HashMap;
-
+import javax.servlet.jsp.PageContext;
 import com.gdbocom.util.waste.WasteLog;
 
 /**
@@ -17,6 +18,42 @@ import com.gdbocom.util.waste.WasteLog;
 public abstract class Transation {
 
     private static WasteLog wasteLog = new WasteLog("c:/gzLog_sj");
+
+    /**
+     * 添加报文头字段和报文体字段并发送
+     * @param pageContext
+     * @param txnCod 交易码
+     * @param serverName
+     * @param transationFactoryType 登记的交易类型
+     * @return
+     * @throws UnknownHostException
+     * @throws IOException
+     */
+	public static Map createMapSend(PageContext pageContext,
+			String txnCod,
+			String serverName,
+			int transationFactoryType) throws UnknownHostException, IOException {
+
+		wasteLog.Write("进入"+Transation.class.getName());
+
+        //配置发送参数
+        Map requestSt = new HashMap();
+        // 报文头字段
+        requestSt.put("TTxnCd", txnCod);
+        requestSt.put("FeCod", txnCod);
+
+        // 报文体字段
+		String key;
+		for (Enumeration e = pageContext.getSession().getAttributeNames();
+				e.hasMoreElements();){
+			key = (String)e.nextElement();
+			requestSt.put(key,
+					pageContext.getAttribute(key, PageContext.SESSION_SCOPE));
+		}
+
+		return Transation.exchangeData(IcsServer.getServer(serverName),
+                requestSt, transationFactoryType);
+	}
 
     /**
      * 通讯报文适配器，将完成发送表单项与通讯报文间的转换、通讯功能。
