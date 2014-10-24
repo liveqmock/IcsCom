@@ -4,8 +4,10 @@ import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.net.UnknownHostException;
 import java.util.Enumeration;
+import java.util.List;
 import java.util.Map;
 import java.util.HashMap;
+import java.util.ArrayList;
 import javax.servlet.jsp.PageContext;
 import com.gdbocom.util.waste.WasteLog;
 
@@ -358,6 +360,58 @@ public abstract class Transation {
 
         }
         return responseData;
+    }
+
+    /**
+     * 多记录报文解析通用方法，同时将编码由ICS的GBK编码转换成Unicode编码
+     * 
+     * @param sequenceOffset
+     *            在循环语句前的字段长度
+     * @param headLen
+     *            循环报文记录数
+     * @param response
+     *            需解析报文
+     * @param format
+     *            解析格式
+     * 
+     *            key:关键字, 字段长度, [FieldTypes]：字段类型,
+     * 
+     * @return 报文项
+     * @throws UnsupportedEncodingException
+     */
+    protected static List unpacketLoop(int sequenceOffset, int headLen, byte[] response, Object[][] format)
+            throws UnsupportedEncodingException {
+    	List groups = new ArrayList();
+        Map responseData = new HashMap();
+
+        int offset = sequenceOffset;
+        byte[] field = new byte[0];
+        //循环记录数
+        System.arraycopy(response, offset, field, 0, headLen);
+        int listCnt = Integer.parseInt(new String(field));
+        for (int i=0; i<listCnt; i++){
+        	//添加记录编号
+        	responseData.put("number", String.valueOf(i));
+        	//按照相关字段配置添加其他字段
+            for (int j = 0; j < format.length; j++) {
+                if (FieldTypes.STATIC.equals(format[j][2])) {
+                    int len = Integer.parseInt((String) format[j][1]);
+                    field = new byte[len];
+                    System.arraycopy(response, offset, field, 0, len);
+                    responseData.put((String) format[j][0],
+                            new String(field, "GBK"));
+                    offset += len;
+
+                } else {// 未定义类型扔出运行时错误
+                    throw new IllegalArgumentException();
+                }
+
+            }
+            groups.add(responseData);
+            responseData = new HashMap();
+        	
+        }
+        return groups;
     }
 
     /**
