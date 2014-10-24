@@ -12,7 +12,7 @@ import com.gdbocom.util.communication.IcsServer;
 import com.gdbocom.util.communication.Transation;
 import com.gdbocom.util.communication.TransationFactory;
 
-public class Wel485413 extends Transation {
+public class Wel485414 extends Transation {
 
 	protected byte[] buildRequestBody(Map request)
             throws UnsupportedEncodingException {
@@ -47,18 +47,17 @@ public class Wel485413 extends Transation {
             throws UnsupportedEncodingException {
 
         Object[][] format = {
-                {"GameId", "2",  FieldTypes.STATIC},
-                {"PlayId", "5",  FieldTypes.STATIC},
-                {"TLogNo", "15", FieldTypes.STATIC},
+                {"TLogNo", "15",  FieldTypes.STATIC},
                 {"DrawId", "5",  FieldTypes.STATIC},
-                {"KenoId", "5",  FieldTypes.STATIC},
+                {"KenoId", "5", FieldTypes.STATIC},
                 {"BetMul", "3",  FieldTypes.STATIC},
-                {"BetAmt", "15", FieldTypes.STATIC},
-                {"BetLin", "128",FieldTypes.STATIC},
+                {"BetLin", "128",  FieldTypes.STATIC},
+                {"BetMod", "5",  FieldTypes.STATIC},
+                {"PrzAmt", "15", FieldTypes.STATIC},
         };
 
         int _reponseHeadLength = 114;
-        int _sequenceBodyLength = 16;
+        int _sequenceBodyLength = 176;
         return Transation.unpacketLoop(_reponseHeadLength+_sequenceBodyLength, 3, response, format);
 
     }

@@ -368,7 +368,7 @@ public abstract class Transation {
      * @param sequenceOffset
      *            在循环语句前的字段长度
      * @param headLen
-     *            循环报文记录数
+     *            循环报文记录数长度
      * @param response
      *            需解析报文
      * @param format
