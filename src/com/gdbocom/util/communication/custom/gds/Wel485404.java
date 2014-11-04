@@ -21,7 +21,7 @@ public class Wel485404 extends Transation {
         		{"CusNam", "%-60s", FieldSource.VAR},
         		{"CrdNo",  "%-30s", FieldSource.VAR},
         		{"ActNo",  "%-21s", FieldSource.VAR},
-        		{"NodNo",  "%-6s",  ""},
+        		{"NodNo",  "%-6s",  FieldSource.PROPS},
         		{"IdTyp",  "%-2s",  FieldSource.VAR},
         		{"IdNo",   "%-30s", FieldSource.VAR},
         		{"MobTel", "%-15s", FieldSource.VAR},
@@ -48,18 +48,25 @@ public class Wel485404 extends Transation {
     public static void main(String[] args) throws UnknownHostException, IOException{
         Map request = new HashMap();
         //报文头字段
-        request.put("TTxnCd", "469998");
-        request.put("FeCod", "469998");
-        //request.put("TxnSrc", "MB441");
+        request.put("TTxnCd", "485404");
+        request.put("FeCod", "485404");
+        request.put("TxnSrc", "MB441");
         //报文体字段
+        request.put("CusNam", "BANKCOMM");
+        request.put("CrdNo", "6222600710007815865");
         request.put("ActNo", "6222600710007815865");
+        request.put("IdTyp", "15");
+        request.put("IdNo", "44010419850301501X");
+        request.put("MobTel", "13570959854");
+        request.put("FixTel", "");
+        request.put("Email", "");
 
         Map responseMap = Transation
-                .exchangeData(IcsServer.getServer("@GDS"),
-                (Map)request,
-                TransationFactory.GDS469998);
-        System.out.println(responseMap.get("TCusId"));
-        System.out.println(responseMap.get("IdNo"));
+                .exchangeData(IcsServer.getServer("@WEL_A"),
+                request,
+                TransationFactory.WEL485404);
+        System.out.println(responseMap.get("LotNam"));
+        /*System.out.println(responseMap.get("IdNo"));*/
 
     }
 }

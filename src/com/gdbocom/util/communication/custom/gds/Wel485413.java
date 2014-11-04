@@ -6,13 +6,17 @@ import java.net.UnknownHostException;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.List;
+
 import com.gdbocom.util.communication.FieldSource;
 import com.gdbocom.util.communication.FieldTypes;
 import com.gdbocom.util.communication.IcsServer;
 import com.gdbocom.util.communication.Transation;
 import com.gdbocom.util.communication.TransationFactory;
+import com.gdbocom.util.communication.LoopPacket;
 
-public class Wel485413 extends Transation {
+public class Wel485413 extends Transation{
+
+	//private int loopOffset = 0;
 
 	protected byte[] buildRequestBody(Map request)
             throws UnsupportedEncodingException {
@@ -36,17 +40,31 @@ public class Wel485413 extends Transation {
                 {"OFmtCd", "3", FieldTypes.STATIC},
                 {"PageNo", "4", FieldTypes.STATIC},
                 {"VarSize","1", FieldTypes.STATIC},
-                {"Ttl",    "3", FieldTypes.STATIC},
-                {"SubTtl", "3", FieldTypes.STATIC},
+                {"Ttl",    "3", FieldTypes.VARIABLELENGTH},
+                {"SubTtl", "3", FieldTypes.VARIABLELENGTH},
         };
-        return Transation.unpacketsSequence(response, format);
+        Map sequenceResponse = Transation.unpacketsSequence(response, format);
+
+        //定义循环字段前标题的偏移量
+        int loopOffset = 0;
+        if(sequenceResponse.containsKey("OFFSET")){
+        	loopOffset = ((Integer)sequenceResponse.get("OFFSET")).intValue();
+        }
+
+        sequenceResponse.putAll(
+        		this.parseLoopResponseBody(response, loopOffset)
+        		);
+        
+        System.out.println(":::"+sequenceResponse);
+        return sequenceResponse;
 
     }
 
-    protected List parseLoopResponseBody(byte[] response)
+    public Map parseLoopResponseBody(byte[] response, int loopOffset)
             throws UnsupportedEncodingException {
-
+System.out.println("response::"+new String(response, "GBK"));
         Object[][] format = {
+                {"TmpNam", "3",  FieldTypes.STATIC},
                 {"GameId", "2",  FieldTypes.STATIC},
                 {"PlayId", "5",  FieldTypes.STATIC},
                 {"TLogNo", "15", FieldTypes.STATIC},
@@ -57,9 +75,9 @@ public class Wel485413 extends Transation {
                 {"BetLin", "128",FieldTypes.STATIC},
         };
 
-        int _reponseHeadLength = 114;
-        int _sequenceBodyLength = 16;
-        return Transation.unpacketLoop(_reponseHeadLength+_sequenceBodyLength, 3, response, format);
+        //int _sequenceBodyLength = 16;
+        //return Transation.unpacketLoop(_sequenceBodyLength+loopOffset, 3, response, format);
+        return Transation.unpacketLoop(loopOffset, 3, response, format);
 
     }
 
@@ -83,4 +101,6 @@ public class Wel485413 extends Transation {
 //        System.out.println(responseMap.get("IdNo"));
 
     }
+
+
 }

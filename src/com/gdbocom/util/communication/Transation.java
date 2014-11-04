@@ -8,7 +8,11 @@ import java.util.List;
 import java.util.Map;
 import java.util.HashMap;
 import java.util.ArrayList;
+
 import javax.servlet.jsp.PageContext;
+
+import org.omg.CosNaming.NamingContextExtPackage.AddressHelper;
+
 import com.gdbocom.util.waste.WasteLog;
 
 /**
@@ -19,7 +23,9 @@ import com.gdbocom.util.waste.WasteLog;
  */
 public abstract class Transation {
 
-    private static WasteLog wasteLog = new WasteLog("c:/gzLog_sj");
+    protected static WasteLog wasteLog = new WasteLog("c:/gzLog_sj");
+    protected int unpackOffset = 0;
+    
 
     /**
      * 添加报文头字段和报文体字段并发送
@@ -52,13 +58,13 @@ public abstract class Transation {
 			requestSt.put(key,
 					pageContext.getAttribute(key, PageContext.SESSION_SCOPE));
 		}
-
+System.out.println(requestSt);
 		return Transation.exchangeData(IcsServer.getServer(serverName),
                 requestSt, transationFactoryType);
 	}
 
     /**
-     * 通讯报文适配器，将完成发送表单项与通讯报文间的转换、通讯功能。
+     * 通讯报文适配器，将完成发送表单项与通讯报文间的转换、通讯功能。用于定长报文
      * 
      * @param server
      *            指定通讯的IcsServer类
@@ -80,8 +86,10 @@ public abstract class Transation {
         byte[] requestPacket = ts.buildRequestPacket(request);
         wasteLog.Write("---------------------");
         wasteLog.Write("发送报文：" + new String(requestPacket, "GBK"));
+        System.out.println(new String(requestPacket, "GBK"));
         // 通讯
         byte[] responsePacket = server.send(requestPacket);
+        System.out.println(new String(responsePacket, "GBK"));
         wasteLog.Write("接收报文：" + new String(responsePacket, "GBK"));
         wasteLog.Write("---------------------");
 
@@ -89,6 +97,7 @@ public abstract class Transation {
         Map response = ts.parseResponseMap(responsePacket);
         return response;
     }
+
 
     /**
      * 生成通讯报文，通讯报文=报文头+报文体，报文头统一使用TIA头，报文体为自定义。
@@ -98,7 +107,7 @@ public abstract class Transation {
      * @return 通讯报文
      * @throws UnsupportedEncodingException
      */
-    private byte[] buildRequestPacket(Map request)
+    protected byte[] buildRequestPacket(Map request)
             throws UnsupportedEncodingException {
 
         byte[] requestHead = buildTiaHead(request);
@@ -183,8 +192,8 @@ public abstract class Transation {
         // 根据MsgTyp值对不同类型报文进行处理
         if (responseData.containsKey("MsgTyp")) {
             if ("N".equals(responseData.get("MsgTyp"))) {// ICS返回Normal
-                Map bodyData = parseNormalResponseBody(responseBody);
 
+                Map bodyData = parseNormalResponseBody(responseBody);
                 responseData.putAll(bodyData);
                 return responseData;
 
@@ -203,6 +212,7 @@ public abstract class Transation {
 
     }
 
+
     /**
      * 解析TOA公共报文头
      * 
@@ -211,7 +221,7 @@ public abstract class Transation {
      * @return 报文头字段
      * @throws UnsupportedEncodingException
      */
-    private Map parseToaHead(byte[] response)
+    protected Map parseToaHead(byte[] response)
             throws UnsupportedEncodingException {
 
         Object[][] format = { { "Fil1", "3", FieldTypes.STATIC },
@@ -259,7 +269,7 @@ public abstract class Transation {
      * @return 报文体字段
      * @throws UnsupportedEncodingException
      */
-    private Map parseErrorResponseBody(byte[] response)
+    protected Map parseErrorResponseBody(byte[] response)
             throws UnsupportedEncodingException {
 
         Object[][] format = { { "TmpDat", "4", FieldTypes.STATIC },
@@ -343,24 +353,54 @@ public abstract class Transation {
             throws UnsupportedEncodingException {
         Map responseData = new HashMap();
 
-        int offset = 0;
+        int _offset = 0;
         byte[] field = new byte[0];
         for (int i = 0; i < format.length; i++) {
+        	
             if (FieldTypes.STATIC.equals(format[i][2])) {
                 int len = Integer.parseInt((String) format[i][1]);
                 field = new byte[len];
-                System.arraycopy(response, offset, field, 0, len);
+                System.arraycopy(response, _offset, field, 0, len);
                 responseData.put((String) format[i][0],
                         new String(field, "GBK"));
-                offset += len;
+                _offset += len;
+
+            }else if (FieldTypes.VARIABLELENGTH.equals(format[i][2])) {
+            	//获取headLen的值
+                int headLenLength = Integer.parseInt((String) format[i][1]);
+                byte[] headLen = new byte[headLenLength];
+                System.arraycopy(response, _offset, headLen, 0, headLenLength);
+                responseData.put((String) format[i][0]+"HeadLen",
+                        new String(headLen, "GBK"));
+                _offset += headLenLength;
+
+                //获得headLen对应field的值
+                int fieldLength = Integer.parseInt(new String(headLen, "GBK"));
+                field = new byte[fieldLength];
+                System.arraycopy(response, _offset, field, 0, fieldLength);
+                responseData.put((String) format[i][0],
+                        new String(field, "GBK"));
+                _offset += fieldLength;
 
             } else {// 未定义类型扔出运行时错误
                 throw new IllegalArgumentException();
             }
-
         }
+        //定义循环字段前标题的偏移量
+        int sequenceOffset = 0;
+        if(!responseData.containsKey("OFFSET")){
+        	sequenceOffset = _offset;
+        }else{
+        	sequenceOffset += ((Integer)responseData.get("OFFSET")).intValue();
+        	sequenceOffset += _offset;
+        }
+        responseData.put("OFFSET", 
+				Integer.valueOf(sequenceOffset)
+			);
+        
         return responseData;
     }
+
 
     /**
      * 多记录报文解析通用方法，同时将编码由ICS的GBK编码转换成Unicode编码
@@ -379,40 +419,94 @@ public abstract class Transation {
      * @return 报文项
      * @throws UnsupportedEncodingException
      */
-    protected static List unpacketLoop(int sequenceOffset, int headLen, byte[] response, Object[][] format)
+    /*protected static Map unpacketLoop(
+    		int sequenceOffset,
+    		int headLen,
+    		byte[] response,
+    		Object[][] format)
             throws UnsupportedEncodingException {
-    	List groups = new ArrayList();
-        Map responseData = new HashMap();
-
-        int offset = sequenceOffset;
-        byte[] field = new byte[0];
-        //循环记录数
+    	int offset = sequenceOffset;
+        byte[] field = new byte[headLen];
         System.arraycopy(response, offset, field, 0, headLen);
-        int listCnt = Integer.parseInt(new String(field));
-        for (int i=0; i<listCnt; i++){
-        	//添加记录编号
-        	responseData.put("number", String.valueOf(i));
-        	//按照相关字段配置添加其他字段
-            for (int j = 0; j < format.length; j++) {
-                if (FieldTypes.STATIC.equals(format[j][2])) {
-                    int len = Integer.parseInt((String) format[j][1]);
-                    field = new byte[len];
-                    System.arraycopy(response, offset, field, 0, len);
-                    responseData.put((String) format[j][0],
-                            new String(field, "GBK"));
-                    offset += len;
+    	return Transation.unpacketLoop(field, format);
+    	
+    }*/
 
-                } else {// 未定义类型扔出运行时错误
-                    throw new IllegalArgumentException();
-                }
 
-            }
-            groups.add(responseData);
-            responseData = new HashMap();
-        	
+    /**
+     * 多记录报文解析通用方法，同时将编码由ICS的GBK编码转换成Unicode编码
+     * 一般来说循环报文是这样子的：
+     * 16:34:51,981 INFO - 表达式解析[$MsgTyp]->[N]
+	 * 16:34:51,981 INFO - 获取域 ApCode = [2][32]
+	 * 16:34:51,981 INFO - 获取域 OFmtCd = [3][Z01]
+	 * 16:34:51,981 INFO - 获取域 PageNo = [4][0001]
+	 * 16:34:51,981 INFO - 获取域 VarSize = [1][3]
+	 * 16:34:51,981 INFO - 获取域 Ttl = [4][浏览]
+	 * 16:34:51,981 INFO - 获取域 SubTtl = [8][查询内容] //这个字段和之前的都是顺序的报文，这个长度就是sequenceOffset
+	 * 16:34:51,982 INFO - 获取域 GameId = [1][5] //多记录开始
+	 * 16:34:51,982 INFO - 获取域 PlayId = [1][1]
+	 * 16:34:51,982 INFO - 获取域 TLogNo = [1][0]
+	 * 16:34:51,982 INFO - 获取域 DrawId = [4][1467]
+	 * 16:34:51,982 INFO - 获取域 KenoId = [0][]
+	 * 16:34:51,982 INFO - 获取域 BetMul = [1][1]
+	 * 16:34:51,982 INFO - 获取域 BetAmt = [0][]
+	 * 16:34:51,982 INFO - 获取域 BetLin = [18][060102030405070107]
+     * 
+     * @param sequenceOffset
+     *            在循环语句前的字段长度
+     * @param headLen
+     *            循环报文记录数长度
+     * @param response
+     *            需解析报文
+     * @param format
+     *            解析格式
+     * 
+     *            key:关键字, 字段长度, [FieldTypes]：字段类型,
+     * 
+     * @return 报文项
+     * @throws UnsupportedEncodingException
+     */
+    protected static Map unpacketLoop(
+    		int sequenceOffset,
+    		int headLenLength,
+    		byte[] response,
+    		Object[][] format)
+            throws UnsupportedEncodingException {
+
+
+    	//保存所有循环体
+    	List records = new ArrayList();
+    	//保存每条循环记录的map
+        //Map recordData = new HashMap();
+
+        
+        //获取循环体前的headlen值
+        byte[] headLenValue = new byte[headLenLength];
+        System.arraycopy(response, sequenceOffset, headLenValue, 0, headLenLength);
+        System.out.println("headLenValue::"+headLenValue);
+
+        //循环体长度数值
+        int headLen = Integer.parseInt(new String(headLenValue, "GBK"));
+        //全部循环体字节流
+        int loopResponseLength = response.length - sequenceOffset;
+        byte[] loopResponse = new byte[loopResponseLength];
+        System.arraycopy(response, sequenceOffset, loopResponse, 0, loopResponseLength);
+        System.out.println("loopResponse::"+loopResponse);
+        //一个循环体字节流
+        byte[] oneLoop = new byte[headLen];
+        for(int offset=0,i=0;offset<loopResponseLength; offset+=headLen, i++){
+        	System.arraycopy(loopResponse, offset, oneLoop, 0, headLen);
+        	System.out.println("oneLoop::"+new String(oneLoop, "GBK"));
+        	records.add(Transation.unpacketsSequence(oneLoop, format));
+        	System.out.println(records);
         }
-        return groups;
+
+		//System.out.println((Map)records.get(0));
+        Map loopBody = new HashMap();
+        loopBody.put("loopBody", records);
+        return loopBody;
     }
+
 
     /**
      * 合并两个字节数组
@@ -440,7 +534,7 @@ public abstract class Transation {
      * @param value
      *            更新后的值
      */
-    private void updateMsgTyp(Map map, String value) {
+    protected void updateMsgTyp(Map map, String value) {
         if (!map.containsKey("MsgTyp")) {// 不存在，直接赋值
             map.put("MsgTyp", value);
             return;
@@ -545,5 +639,13 @@ public abstract class Transation {
             sRetMsg = new String(bObjData);
         }
         return sRetMsg;
+    }
+
+    /**
+     * 更新偏移量字段
+     * 
+     */
+    private void addOffset(int offset){
+    	this.unpackOffset += offset;
     }
 }

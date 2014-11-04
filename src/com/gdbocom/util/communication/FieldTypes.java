@@ -9,6 +9,7 @@ package com.gdbocom.util.communication;
 public class FieldTypes {
     private String name = null;
     public static final FieldTypes STATIC = new FieldTypes("1");
+    public static final FieldTypes VARIABLELENGTH = new FieldTypes("5");
     public static final FieldTypes LOOPSTART = new FieldTypes("2");
     public static final FieldTypes LOOPEND = new FieldTypes("3");
     public static final FieldTypes LOOPING = new FieldTypes("4");
