@@ -9,12 +9,10 @@ import java.util.Map;
 import com.gdbocom.util.communication.FieldSource;
 import com.gdbocom.util.communication.FieldTypes;
 import com.gdbocom.util.communication.IcsServer;
-import com.gdbocom.util.communication.LoopPacket;
 import com.gdbocom.util.communication.Transation;
 import com.gdbocom.util.communication.TransationFactory;
 
-public class Wel485413 extends Transation
-	implements LoopPacket{
+public class Wel485413 extends Transation{
 
 
 	protected byte[] buildRequestBody(Map request)
@@ -50,7 +48,7 @@ public class Wel485413 extends Transation
 
     }
 
-    protected Map parseSequenceResponseBody(byte[] response)
+    private Map parseSequenceResponseBody(byte[] response)
             throws UnsupportedEncodingException {
 
         Object[][] format = {
@@ -68,7 +66,7 @@ public class Wel485413 extends Transation
 
     }
 
-    public Map parseLoopResponseBody(byte[] response, int loopOffset)
+    private Map parseLoopResponseBody(byte[] response, int loopOffset)
             throws UnsupportedEncodingException {
         Object[][] format = {
                 {"TmpNam", "3",  FieldTypes.STATIC},
@@ -81,8 +79,8 @@ public class Wel485413 extends Transation
                 {"BetAmt", "15", FieldTypes.STATIC},
                 {"BetLin", "128",FieldTypes.STATIC},
         };
-
-        return Transation.unpacketLoop(loopOffset, 3, response, format);
+        int headLenLength = 3;
+        return Transation.unpacketLoop(loopOffset, headLenLength, response, format);
 
     }
 

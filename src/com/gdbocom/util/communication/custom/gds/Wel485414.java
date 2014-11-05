@@ -6,13 +6,16 @@ import java.net.UnknownHostException;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.List;
+
 import com.gdbocom.util.communication.FieldSource;
 import com.gdbocom.util.communication.FieldTypes;
 import com.gdbocom.util.communication.IcsServer;
+import com.gdbocom.util.communication.LoopResponseBody;
 import com.gdbocom.util.communication.Transation;
 import com.gdbocom.util.communication.TransationFactory;
 
-public class Wel485414 extends Transation {
+public class Wel485414 extends Transation
+	implements LoopResponseBody{
 
 	protected byte[] buildRequestBody(Map request)
             throws UnsupportedEncodingException {
@@ -30,16 +33,21 @@ public class Wel485414 extends Transation {
     protected Map parseNormalResponseBody(byte[] response)
             throws UnsupportedEncodingException {
 
-        Object[][] format = {
-                {"TmpDat", "4",FieldTypes.STATIC},
-                {"ApCode", "2", FieldTypes.STATIC},
-                {"OFmtCd", "3", FieldTypes.STATIC},
-                {"PageNo", "4", FieldTypes.STATIC},
-                {"VarSize","1", FieldTypes.STATIC},
-                {"Ttl",    "3", FieldTypes.STATIC},
-                {"SubTtl", "3", FieldTypes.STATIC},
-        };
-        return Transation.unpacketsSequence(response, format);
+        Map responseData = parseSequenceResponseBody(response);
+    	//定义循环字段前标题的偏移量
+        int loopOffset = 0;
+        if(responseData.containsKey("OFFSET")){
+        	loopOffset = ((Integer)responseData.get("OFFSET")).intValue();
+        }
+
+        responseData.putAll(
+        		this.parseLoopResponseBody(response, loopOffset)
+        		);
+        
+        wasteLog.Write("接拆完毕的整体报文字段：\n"+responseData);
+        
+        return responseData;
+
 
     }
 
@@ -82,4 +90,11 @@ public class Wel485414 extends Transation {
 //        System.out.println(responseMap.get("IdNo"));
 
     }
+
+
+	public Map parseLoopResponseBody(byte[] response, int loopOffset)
+			throws UnsupportedEncodingException {
+		// TODO Auto-generated method stub
+		return null;
+	}
 }
