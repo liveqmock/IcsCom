@@ -16,7 +16,6 @@ import com.gdbocom.util.communication.LoopPacket;
 
 public class Wel485413 extends Transation{
 
-	//private int loopOffset = 0;
 
 	protected byte[] buildRequestBody(Map request)
             throws UnsupportedEncodingException {
@@ -34,6 +33,26 @@ public class Wel485413 extends Transation{
     protected Map parseNormalResponseBody(byte[] response)
             throws UnsupportedEncodingException {
 
+        Map responseData = parseSequenceResponseBody(response);
+    	//定义循环字段前标题的偏移量
+        int loopOffset = 0;
+        if(responseData.containsKey("OFFSET")){
+        	loopOffset = ((Integer)responseData.get("OFFSET")).intValue();
+        }
+
+        responseData.putAll(
+        		this.parseLoopResponseBody(response, loopOffset)
+        		);
+        
+        //wasteLog.Write("接拆完毕的整体报文字段：\n"+responseData);
+        System.out.println("接拆完毕的整体报文字段：\n"+responseData);
+        return responseData;
+
+    }
+
+    protected Map parseSequenceResponseBody(byte[] response)
+            throws UnsupportedEncodingException {
+
         Object[][] format = {
                 {"TmpDat", "4",FieldTypes.STATIC},
                 {"ApCode", "2", FieldTypes.STATIC},
@@ -43,20 +62,9 @@ public class Wel485413 extends Transation{
                 {"Ttl",    "3", FieldTypes.VARIABLELENGTH},
                 {"SubTtl", "3", FieldTypes.VARIABLELENGTH},
         };
-        Map sequenceResponse = Transation.unpacketsSequence(response, format);
-
-        //定义循环字段前标题的偏移量
-        int loopOffset = 0;
-        if(sequenceResponse.containsKey("OFFSET")){
-        	loopOffset = ((Integer)sequenceResponse.get("OFFSET")).intValue();
-        }
-
-        sequenceResponse.putAll(
-        		this.parseLoopResponseBody(response, loopOffset)
-        		);
+        Map responseData = Transation.unpacketsSequence(response, format);
         
-        System.out.println(":::"+sequenceResponse);
-        return sequenceResponse;
+        return responseData;
 
     }
 
