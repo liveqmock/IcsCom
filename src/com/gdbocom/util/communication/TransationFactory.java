@@ -1,9 +1,15 @@
 package com.gdbocom.util.communication;
 
 import com.gdbocom.util.communication.custom.gds.*;
+import com.gdbocom.util.communication.custom.wel.Wel485404;
+import com.gdbocom.util.communication.custom.wel.Wel485405;
+import com.gdbocom.util.communication.custom.wel.Wel485412;
+import com.gdbocom.util.communication.custom.wel.Wel485413;
+import com.gdbocom.util.communication.custom.wel.Wel485414;
 
 /**
- * Transation的工厂类，创建不同交易和交易码的拼包与解包Transation类，不同的
+ * Transation的简单工厂类，同时用于登记各个不同的Transation实现类，
+ * 能够创建不同交易和交易码的拼包与解包Transation类，不同的
  * Transation类有自己的登记值。
  * @author qm
  *

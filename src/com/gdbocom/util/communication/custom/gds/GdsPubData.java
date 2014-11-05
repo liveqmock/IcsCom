@@ -7,6 +7,11 @@ import java.util.Map;
 import com.gdbocom.util.communication.FieldSource;
 import com.gdbocom.util.communication.Transation;
 
+/**
+ * 登记各种gds业务公有字段及方法的类
+ * @author qm
+ *
+ */
 public class GdsPubData extends Transation {
 
     /* 功能选择项 */

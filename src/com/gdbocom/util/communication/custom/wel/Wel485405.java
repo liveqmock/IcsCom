@@ -1,4 +1,4 @@
-package com.gdbocom.util.communication.custom.gds;
+package com.gdbocom.util.communication.custom.wel;
 
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
@@ -11,6 +11,12 @@ import com.gdbocom.util.communication.FieldTypes;
 import com.gdbocom.util.communication.IcsServer;
 import com.gdbocom.util.communication.Transation;
 import com.gdbocom.util.communication.TransationFactory;
+
+/**
+ * 福利彩票485405交易的报文配置类
+ * @author qm
+ *
+ */
 
 public class Wel485405 extends Transation {
 

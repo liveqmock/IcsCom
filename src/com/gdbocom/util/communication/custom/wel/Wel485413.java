@@ -1,4 +1,4 @@
-package com.gdbocom.util.communication.custom.gds;
+package com.gdbocom.util.communication.custom.wel;
 
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
@@ -12,6 +12,11 @@ import com.gdbocom.util.communication.IcsServer;
 import com.gdbocom.util.communication.Transation;
 import com.gdbocom.util.communication.TransationFactory;
 
+/**
+ * 福利彩票业务485413交易的报文配置类
+ * @author qm
+ *
+ */
 public class Wel485413 extends Transation{
 
 
@@ -48,6 +53,12 @@ public class Wel485413 extends Transation{
 
     }
 
+    /**
+     * 接拆返回报文里面的非循环部分
+     * @param response 除ics报文头外，剩下的报文
+     * @return
+     * @throws UnsupportedEncodingException
+     */
     private Map parseSequenceResponseBody(byte[] response)
             throws UnsupportedEncodingException {
 
@@ -66,6 +77,13 @@ public class Wel485413 extends Transation{
 
     }
 
+    /**
+     * 接拆返回报文里面的循环部分
+     * @param response 除ics报文头外，剩下的报文
+     * @param loopOffset 除ics报文头外，非循环部分的长度
+     * @return
+     * @throws UnsupportedEncodingException
+     */
     private Map parseLoopResponseBody(byte[] response, int loopOffset)
             throws UnsupportedEncodingException {
         Object[][] format = {

@@ -4,16 +4,26 @@ import java.io.*;
 import java.util.*;
 import java.text.*;
 
+/**
+ * 由于区别于其他业务信息，因此另外创建一个位置保存通讯的报文日志。但是这种早就应该用
+ * logger组件来解决，因此叫Waste。
+ * @author qm
+ *
+ */
 public class WasteLog
 {
     private FileWriter fw;
     private String LogDirect = new String("");
-    
+
     public WasteLog(String Direct)
     {
     	LogDirect = Direct;
     }
 
+    /**
+     * 记录日志
+     * @param strLog
+     */
     public void Write(String strLog)
     {
     	Date current = new Date();

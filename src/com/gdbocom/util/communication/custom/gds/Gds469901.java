@@ -12,6 +12,11 @@ import com.gdbocom.util.communication.IcsServer;
 import com.gdbocom.util.communication.Transation;
 import com.gdbocom.util.communication.TransationFactory;
 
+/**
+ * 一站式签约业务469901交易的报文配置类
+ * @author qm
+ *
+ */
 public class Gds469901 extends Transation {
 
 	/* 银行类型 */
