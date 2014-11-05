@@ -5,16 +5,16 @@ import java.io.UnsupportedEncodingException;
 import java.net.UnknownHostException;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.List;
 
 import com.gdbocom.util.communication.FieldSource;
 import com.gdbocom.util.communication.FieldTypes;
 import com.gdbocom.util.communication.IcsServer;
+import com.gdbocom.util.communication.LoopPacket;
 import com.gdbocom.util.communication.Transation;
 import com.gdbocom.util.communication.TransationFactory;
-import com.gdbocom.util.communication.LoopPacket;
 
-public class Wel485413 extends Transation{
+public class Wel485413 extends Transation
+	implements LoopPacket{
 
 
 	protected byte[] buildRequestBody(Map request)
@@ -44,8 +44,8 @@ public class Wel485413 extends Transation{
         		this.parseLoopResponseBody(response, loopOffset)
         		);
         
-        //wasteLog.Write("接拆完毕的整体报文字段：\n"+responseData);
-        System.out.println("接拆完毕的整体报文字段：\n"+responseData);
+        wasteLog.Write("接拆完毕的整体报文字段：\n"+responseData);
+        
         return responseData;
 
     }
@@ -70,7 +70,6 @@ public class Wel485413 extends Transation{
 
     public Map parseLoopResponseBody(byte[] response, int loopOffset)
             throws UnsupportedEncodingException {
-System.out.println("response::"+new String(response, "GBK"));
         Object[][] format = {
                 {"TmpNam", "3",  FieldTypes.STATIC},
                 {"GameId", "2",  FieldTypes.STATIC},
@@ -83,8 +82,6 @@ System.out.println("response::"+new String(response, "GBK"));
                 {"BetLin", "128",FieldTypes.STATIC},
         };
 
-        //int _sequenceBodyLength = 16;
-        //return Transation.unpacketLoop(_sequenceBodyLength+loopOffset, 3, response, format);
         return Transation.unpacketLoop(loopOffset, 3, response, format);
 
     }
@@ -105,10 +102,10 @@ System.out.println("response::"+new String(response, "GBK"));
                 .exchangeData(IcsServer.getServer("@WEL_B"),
                 (Map)request,
                 TransationFactory.WEL485413);
-//        System.out.println(responseMap.get("TCusId"));
-//        System.out.println(responseMap.get("IdNo"));
+        System.out.println(responseMap);
 
     }
+
 
 
 }
