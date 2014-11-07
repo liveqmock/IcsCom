@@ -457,7 +457,8 @@ public abstract class Transation {
 		int oneLoopLength = headLen+headLenLength;
         //一个循环体字节流
         byte[] oneLoop = new byte[oneLoopLength];
-        for(int offset=0;offset<loopResponseLength; offset+=oneLoopLength){
+        int loopCnt = 0;
+        for(int offset=0;offset<loopResponseLength; offset+=oneLoopLength, loopCnt++){
         	System.arraycopy(loopResponse, offset, oneLoop, 0, oneLoopLength);
         	wasteLog.Write("单个循环体:"+new String(oneLoop, "GBK"));
         	records.add(Transation.unpacketsSequence(oneLoop, format));
@@ -465,7 +466,8 @@ public abstract class Transation {
         }
 
         Map loopBody = new HashMap();
-        loopBody.put("loopBody", records);
+        loopBody.put("LoopBody", records);
+        loopBody.put("LoopCnt", Integer.valueOf(loopCnt));
         return loopBody;
     }
 
