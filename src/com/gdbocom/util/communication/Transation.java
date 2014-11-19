@@ -46,15 +46,20 @@ public abstract class Transation {
         requestSt.put("TTxnCd", txnCod);
         requestSt.put("FeCod", txnCod);
 
+		wasteLog.Write("PageContext字段："+pageContext.getSession().getAttributeNames());
+
         // 报文体字段
-		String key;
+		String key = null;
+		Object field = null;
 		for (Enumeration e = pageContext.getSession().getAttributeNames();
 				e.hasMoreElements();){
 			key = (String)e.nextElement();
-			requestSt.put(key,
-					pageContext.getAttribute(key, PageContext.SESSION_SCOPE));
+			field = pageContext.getAttribute(key, PageContext.SESSION_SCOPE);
+			wasteLog.Write("保存"+key+"："+field.toString());;
+			requestSt.put(key, field);
 		}
 
+		wasteLog.Write("请求Map为："+requestSt);;
 		return Transation.exchangeData(IcsServer.getServer(serverName),
                 requestSt, transationFactoryType);
 	}
@@ -389,7 +394,7 @@ public abstract class Transation {
         	sequenceOffset += _offset;
         }
         responseData.put("OFFSET", 
-				Integer.valueOf(sequenceOffset)
+				new Integer(sequenceOffset)
 			);
         
         return responseData;

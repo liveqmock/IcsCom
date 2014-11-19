@@ -51,7 +51,7 @@ public class TransationFactory {
             case TransationFactory.WEL485412: return new Wel485412();
             case TransationFactory.WEL485413: return new Wel485413();
             case TransationFactory.WEL485414: return new Wel485414();
-            default: return null;
+            default: throw new IllegalArgumentException();
         }
     }
 }
