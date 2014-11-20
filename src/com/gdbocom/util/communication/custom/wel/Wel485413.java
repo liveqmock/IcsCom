@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.net.UnknownHostException;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import com.gdbocom.util.communication.FieldSource;
@@ -119,6 +120,14 @@ public class Wel485413 extends Transation{
                 (Map)request,
                 TransationFactory.WEL485413);
         System.out.println(responseMap);
+        List loopBody = (List)responseMap.get("LoopBody");
+        System.out.println(loopBody);
+        for(int i=0; i<loopBody.size(); i++){
+        	Map oneRecord = (Map)loopBody.get(i);
+            System.out.println("投注期号："+oneRecord.get("DrawId"));
+            System.out.println("投注号码："+oneRecord.get("BetLin"));
+            System.out.println("投注金额："+oneRecord.get("BetAmt"));
+        }
 
     }
 
