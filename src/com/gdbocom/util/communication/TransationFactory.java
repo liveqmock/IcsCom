@@ -1,11 +1,7 @@
 package com.gdbocom.util.communication;
 
 import com.gdbocom.util.communication.custom.gds.*;
-import com.gdbocom.util.communication.custom.wel.Wel485404;
-import com.gdbocom.util.communication.custom.wel.Wel485405;
-import com.gdbocom.util.communication.custom.wel.Wel485412;
-import com.gdbocom.util.communication.custom.wel.Wel485413;
-import com.gdbocom.util.communication.custom.wel.Wel485414;
+import com.gdbocom.util.communication.custom.wel.*;
 
 /**
  * Transation的简单工厂类，同时用于登记各个不同的Transation实现类，
@@ -35,6 +31,8 @@ public class TransationFactory {
     public static final int WEL485413 = 8;
     /** WEL应用的485414交易的代号 */
     public static final int WEL485414 = 9;
+    /** WEL应用的485407交易的代号 */
+    public static final int WEL485407 = 10;
 
     /**
      * 根据不同的交易代号，返回不同的拼解包类。
@@ -51,6 +49,7 @@ public class TransationFactory {
             case TransationFactory.WEL485412: return new Wel485412();
             case TransationFactory.WEL485413: return new Wel485413();
             case TransationFactory.WEL485414: return new Wel485414();
+            case TransationFactory.WEL485407: return new Wel485407();
             default: throw new IllegalArgumentException();
         }
     }
