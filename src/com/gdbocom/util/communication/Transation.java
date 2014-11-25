@@ -39,6 +39,9 @@ public abstract class Transation {
 			int transationFactoryType) throws UnknownHostException, IOException {
 
 		wasteLog.Write("进入"+Transation.class.getName());
+		wasteLog.Write("txnCod:"+txnCod);
+		wasteLog.Write("serverName:"+serverName);
+		wasteLog.Write("transationFactoryType:"+transationFactoryType);
 
         //配置发送参数
         Map requestSt = new HashMap();
@@ -59,8 +62,12 @@ public abstract class Transation {
 			requestSt.put(key, field);
 		}
 
-		wasteLog.Write("请求Map为："+requestSt);;
-		return Transation.exchangeData(IcsServer.getServer(serverName),
+		wasteLog.Write("请求Map为："+requestSt);
+		wasteLog.Write("break 1：");
+		IcsServer tmp = IcsServer.getServer(serverName);
+		wasteLog.Write("break 2："+tmp);
+		
+		return Transation.exchangeData(tmp,
                 requestSt, transationFactoryType);
 	}
 
@@ -81,9 +88,11 @@ public abstract class Transation {
             int transationFactoryType) throws UnknownHostException, IOException {
 
         // 实例化具体报文实现类
+        wasteLog.Write("进入exchangeData方法");
         Transation ts = TransationFactory
                 .createTransation(transationFactoryType);
         // 通过表单项获取通讯报文
+        wasteLog.Write("创建请求报文");
         byte[] requestPacket = ts.buildRequestPacket(request);
         wasteLog.Write("---------------------");
         wasteLog.Write("发送报文：" + new String(requestPacket, "GBK"));

@@ -63,14 +63,14 @@ public class Wel485412 extends Transation {
     public static void main(String[] args) throws UnknownHostException, IOException{
         Map request = new HashMap();
         //报文头字段
-        request.put("TTxnCd", "469998");
-        request.put("FeCod", "469998");
+        request.put("TTxnCd", "485412");
+        request.put("FeCod", "485412");
         //request.put("TxnSrc", "MB441");
         //报文体字段
         request.put("ActNo", "6222600710007815865");
 
         Map responseMap = Transation
-                .exchangeData(IcsServer.getServer("@GDS"),
+                .exchangeData(IcsServer.getServer("@WEL_B"),
                 (Map)request,
                 TransationFactory.GDS469998);
         System.out.println(responseMap.get("TCusId"));

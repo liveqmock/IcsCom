@@ -33,6 +33,10 @@ public class TransationFactory {
     public static final int WEL485414 = 9;
     /** WEL应用的485407交易的代号 */
     public static final int WEL485407 = 10;
+    /** WEL应用的485409交易的代号 */
+    public static final int WEL485409 = 11;
+    /** WEL应用的485410交易的代号 */
+    public static final int WEL485410 = 12;
 
     /**
      * 根据不同的交易代号，返回不同的拼解包类。
@@ -50,6 +54,8 @@ public class TransationFactory {
             case TransationFactory.WEL485413: return new Wel485413();
             case TransationFactory.WEL485414: return new Wel485414();
             case TransationFactory.WEL485407: return new Wel485407();
+            case TransationFactory.WEL485409: return new Wel485409();
+            case TransationFactory.WEL485410: return new Wel485410();
             default: throw new IllegalArgumentException();
         }
     }

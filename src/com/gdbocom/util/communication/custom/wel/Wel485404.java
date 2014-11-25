@@ -70,7 +70,7 @@ public class Wel485404 extends Transation {
                 .exchangeData(IcsServer.getServer("@WEL_A"),
                 request,
                 TransationFactory.WEL485404);
-        System.out.println(responseMap.get("LotNam"));
+        System.out.println(responseMap);
         /*System.out.println(responseMap.get("IdNo"));*/
 
     }

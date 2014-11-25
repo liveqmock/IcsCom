@@ -37,8 +37,15 @@ public class IcsServer {
      * @return 实例化后的IcsServer对象
      */
     public static IcsServer getServer(String configTag) {
+    	
+        System.out.println("configTag:"+configTag);
         String host_post = ConfigProps.getInstance().getProperty(configTag);
+        System.out.println("host_post:"+host_post);
+        System.out.println("gds:"+ConfigProps.getInstance().getProperty("@GDS"));
         String[] hostPost = host_post.split(",");
+        System.out.println("configTag:"+configTag);
+        System.out.println("host:"+hostPost[0]);
+        System.out.println("post:"+hostPost[1]);
         return new IcsServer(hostPost[0], Integer.valueOf(hostPost[1])
                 .intValue());
 
