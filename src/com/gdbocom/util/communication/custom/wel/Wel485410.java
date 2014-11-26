@@ -50,7 +50,8 @@ public class Wel485410 extends Transation {
         request.put("FeCod", "485410");
         //request.put("TxnSrc", "MB441");
         //报文体字段
-        request.put("CrdNo", "6222600710007815865");
+        request.put("CrdNo", "6222600710009621634");
+        request.put("PlanNo", "99201501210000000001");
 
         Map responseMap = Transation
                 .exchangeData(IcsServer.getServer("@WEL_A"),

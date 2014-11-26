@@ -103,6 +103,7 @@ public abstract class Transation {
 
         // 通过通讯返回报文得到Map值
         Map response = ts.parseResponseMap(responsePacket);
+        wasteLog.Write(response.toString());
         return response;
     }
 
@@ -450,9 +451,15 @@ public abstract class Transation {
     		Object[][] format)
             throws UnsupportedEncodingException {
 
-
     	//去除循环体前面部分
     	int loopResponseLength = response.length - sequenceOffset;
+    	//判断是否记录为空
+    	if(0==loopResponseLength){
+            Map emptyBody = new HashMap();
+            emptyBody.put("LoopCnt", new Integer(0));
+            return emptyBody;
+
+    	}
     	byte[] loopResponse = new byte[loopResponseLength];
     	System.arraycopy(response, sequenceOffset, loopResponse, 0, loopResponseLength);
     	
@@ -481,7 +488,7 @@ public abstract class Transation {
 
         Map loopBody = new HashMap();
         loopBody.put("LoopBody", records);
-        loopBody.put("LoopCnt", Integer.valueOf(loopCnt));
+        loopBody.put("LoopCnt", new Integer(loopCnt));
         return loopBody;
     }
 

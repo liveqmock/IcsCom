@@ -26,13 +26,13 @@ public class Wel485405 extends Transation {
         Object[][] format = {
         		{"CusNam", "%-60s", FieldSource.VAR},
         		{"CrdNo",  "%-30s", FieldSource.VAR},
-        		{"ActNo",  "%-21s", FieldSource.VAR},
-        		{"NodNo",  "%-6s",  ""},
+        		/*{"ActNo",  "%-21s", FieldSource.VAR},
+        		{"NodNo",  "%-6s",  ""},*/
         		{"IdTyp",  "%-2s",  FieldSource.VAR},
         		{"IdNo",   "%-30s", FieldSource.VAR},
         		{"MobTel", "%-15s", FieldSource.VAR},
-        		{"FixTel", "%-20s", ""},
-        		{"Email",  "%-30s", ""},
+        		/*{"FixTel", "%-20s", ""},
+        		{"Email",  "%-30s", ""},*/
         };
         return Transation.packetSequence(request, format);
     }
@@ -45,7 +45,7 @@ public class Wel485405 extends Transation {
                 {"TmpDat","4",FieldTypes.STATIC},
                 {"ApCode", "2", FieldTypes.STATIC},
                 {"OFmtCd", "3", FieldTypes.STATIC},
-                {"LotNam", "30", FieldTypes.STATIC},
+                {"MobTel", "15", FieldTypes.STATIC},
         };
         return Transation.unpacketsSequence(response, format);
 

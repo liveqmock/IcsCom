@@ -86,14 +86,15 @@ public class Wel485409 extends Transation{
             throws UnsupportedEncodingException {
         Object[][] format = {
                 {"TmpNam", "3",  FieldTypes.STATIC},
-                {"GameId", "2",  FieldTypes.STATIC},
-                {"PlayId", "5",  FieldTypes.STATIC},
-                {"TLogNo", "15", FieldTypes.STATIC},
-                {"DrawId", "5",  FieldTypes.STATIC},
-                {"KenoId", "5",  FieldTypes.STATIC},
-                {"BetMul", "3",  FieldTypes.STATIC},
-                {"BetAmt", "15", FieldTypes.STATIC},
-                {"BetLin", "128",FieldTypes.STATIC},
+                {"PlanNo", "20",  FieldTypes.STATIC},
+                {"PlanNm", "30",  FieldTypes.STATIC},
+                {"MobTel", "15",  FieldTypes.STATIC},
+                {"BetPer", "5",  FieldTypes.STATIC},
+                {"BetLin", "128",  FieldTypes.STATIC},
+                {"BetAmt", "15",  FieldTypes.STATIC},
+                {"DoPer",  "5",  FieldTypes.STATIC},
+                {"LevPer", "5",  FieldTypes.STATIC},
+                {"Status", "1",  FieldTypes.STATIC},
         };
         int headLenLength = 3;
         return Transation.unpacketLoop(loopOffset, headLenLength, response, format);
@@ -107,10 +108,7 @@ public class Wel485409 extends Transation{
         request.put("FeCod", "485409");
         request.put("TxnSrc", "MB441");
         //报文体字段
-        request.put("CrdNo", "6222620710001266947");
-        request.put("BetTyp", "0");
-        request.put("BegDat", "20141009");
-        request.put("EndDat", "20141009");
+        request.put("CrdNo", "6222600710009621634");
 
         Map responseMap = Transation
                 .exchangeData(IcsServer.getServer("@WEL_A"),
