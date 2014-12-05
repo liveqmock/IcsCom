@@ -62,12 +62,8 @@ public abstract class Transation {
 			requestSt.put(key, field);
 		}
 
-		wasteLog.Write("请求Map为："+requestSt);
-		wasteLog.Write("break 1：");
-		IcsServer tmp = IcsServer.getServer(serverName);
-		wasteLog.Write("break 2："+tmp);
-		
-		return Transation.exchangeData(tmp,
+		wasteLog.Write("请求Map为："+requestSt); 
+		return Transation.exchangeData(IcsServer.getServer(serverName),
                 requestSt, transationFactoryType);
 	}
 
@@ -121,7 +117,6 @@ public abstract class Transation {
 
         byte[] requestHead = buildTiaHead(request);
         byte[] requestBody = buildRequestBody(request);
-
         return Transation.mergeByte(requestHead, requestBody);
     }
 
@@ -486,6 +481,35 @@ public abstract class Transation {
         	wasteLog.Write("接拆后的单个循环体:\n"+records);
         }
 
+        Map loopBody = new HashMap();
+        loopBody.put("LoopBody", records);
+        loopBody.put("LoopCnt", new Integer(loopCnt));
+        return loopBody;
+    }
+
+    protected static Map unpacketTdLoop(
+    		int sequenceOffset,
+    		byte[] response,
+    		int oneLoopLen,
+    		Object[][] format)
+            throws UnsupportedEncodingException {
+
+    	//去除循环体前面部分
+    	int loopResponseLength = response.length - sequenceOffset;
+    	byte[] loopResponse = new byte[loopResponseLength];
+    	System.arraycopy(response, sequenceOffset, loopResponse, 0, loopResponseLength);
+
+    	//保存所有循环体
+    	List records = new ArrayList();
+		int oneLoopLength = oneLoopLen;
+        //一个循环体字节流
+        byte[] oneLoop = new byte[oneLoopLength];
+        
+        int loopCnt = 0;
+        for(int offset=0;offset<loopResponseLength; offset+=oneLoopLength, loopCnt++){
+        	System.arraycopy(loopResponse, offset, oneLoop, 0, oneLoopLength);
+        	records.add(Transation.unpacketsSequence(oneLoop, format));
+        }
         Map loopBody = new HashMap();
         loopBody.put("LoopBody", records);
         loopBody.put("LoopCnt", new Integer(loopCnt));

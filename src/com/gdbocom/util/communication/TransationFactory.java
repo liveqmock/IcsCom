@@ -2,6 +2,7 @@ package com.gdbocom.util.communication;
 
 import com.gdbocom.util.communication.custom.gds.*;
 import com.gdbocom.util.communication.custom.wel.*;
+import com.gdbocom.util.communication.custom.shaoguan.*;
 
 /**
  * Transation的简单工厂类，同时用于登记各个不同的Transation实现类，
@@ -25,18 +26,46 @@ public class TransationFactory {
     public static final int WEL485404 = 5;
     /** WEL应用的485405交易的代号 */
     public static final int WEL485405 = 6;
-    /** WEL应用的485412交易的代号 */
-    public static final int WEL485412 = 7;
-    /** WEL应用的485413交易的代号 */
-    public static final int WEL485413 = 8;
-    /** WEL应用的485414交易的代号 */
-    public static final int WEL485414 = 9;
     /** WEL应用的485407交易的代号 */
-    public static final int WEL485407 = 10;
+    public static final int WEL485407 = 7;
     /** WEL应用的485409交易的代号 */
-    public static final int WEL485409 = 11;
+    public static final int WEL485409 = 9;
     /** WEL应用的485410交易的代号 */
-    public static final int WEL485410 = 12;
+    public static final int WEL485410 = 10;
+    /** WEL应用的485412交易的代号 */
+    public static final int WEL485412 = 12;
+    /** WEL应用的485413交易的代号 */
+    public static final int WEL485413 = 13;
+    /** WEL应用的485414交易的代号 */
+    public static final int WEL485414 = 14;
+    /** SGD应用的466601交易的代号 */
+    public static final int SGD466601 = 15;
+    /** SGD应用的466602交易的代号 */
+    public static final int SGD466602 = 16;
+    /** SGD应用的466603交易的代号 */
+    public static final int SGD466603 = 17;
+    /** SGD应用的466604交易的代号 */
+    public static final int SGD466604 = 18;
+    /** SGD应用的466605交易的代号 */
+    public static final int SGD466605 = 19;
+    /** SGD应用的466607交易的代号 */
+    public static final int SGD466607 = 21;
+    /** SGD应用的466611交易的代号 */
+    public static final int SGD466611 = 22;
+    /** SGD应用的466612交易的代号 */
+    public static final int SGD466612 = 23;
+    /** SGD应用的466613交易的代号 */
+    public static final int SGD466613 = 24;
+    /** SGD应用的466670交易的代号 */
+    public static final int SGD466670 = 25;
+    /** SGD应用的466671交易的代号 */
+    public static final int SGD466671 = 26;
+    /** SGD应用的466672交易的代号 */
+    public static final int SGD466672 = 27;
+    /** SGD应用的466675交易的代号 */
+    public static final int SGD466675 = 28;
+    /** SGD应用的466675交易的代号 */
+    public static final int SGD466676 = 29;
 
     /**
      * 根据不同的交易代号，返回不同的拼解包类。
@@ -50,13 +79,29 @@ public class TransationFactory {
             case TransationFactory.GDS469998: return new Gds469998();
             case TransationFactory.WEL485404: return new Wel485404();
             case TransationFactory.WEL485405: return new Wel485405();
-            case TransationFactory.WEL485412: return new Wel485412();
-            case TransationFactory.WEL485413: return new Wel485413();
-            case TransationFactory.WEL485414: return new Wel485414();
             case TransationFactory.WEL485407: return new Wel485407();
             case TransationFactory.WEL485409: return new Wel485409();
             case TransationFactory.WEL485410: return new Wel485410();
+            case TransationFactory.WEL485412: return new Wel485412();
+            case TransationFactory.WEL485413: return new Wel485413();
+            case TransationFactory.WEL485414: return new Wel485414();
+            case TransationFactory.SGD466601: return new Sgd466601();
+            case TransationFactory.SGD466602: return new Sgd466602();
+            case TransationFactory.SGD466603: return new Sgd466603();
+            case TransationFactory.SGD466604: return new Sgd466604();
+            case TransationFactory.SGD466605: return new Sgd466605();
+            case TransationFactory.SGD466607: return new Sgd466607();
+            case TransationFactory.SGD466611: return new Sgd466611();
+            case TransationFactory.SGD466612: return new Sgd466612();
+            case TransationFactory.SGD466613: return new Sgd466613();
+            case TransationFactory.SGD466670: return new Sgd466670();
+            case TransationFactory.SGD466671: return new Sgd466671();
+            case TransationFactory.SGD466672: return new Sgd466672();
+            case TransationFactory.SGD466675: return new Sgd466675();
+            case TransationFactory.SGD466676: return new Sgd466676();
             default: throw new IllegalArgumentException();
         }
     }
+    
+    
 }
