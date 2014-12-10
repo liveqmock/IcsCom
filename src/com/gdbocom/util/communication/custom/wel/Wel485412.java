@@ -67,12 +67,20 @@ public class Wel485412 extends Transation {
         request.put("FeCod", "485412");
         //request.put("TxnSrc", "MB441");
         //报文体字段
-        request.put("ActNo", "6222600710007815865");
+        request.put("CrdNo", "6222600710004688885");
+        request.put("GameId", "5");
+        request.put("PlayId", "1");
+        request.put("BetMod", "12");
+        request.put("BetMul", "1");
+        request.put("BetAmt", "200");
+        request.put("GrpNum", "2");
+        request.put("BetNum", "7");
+        request.put("BetLin", "060102060711120101");
 
         Map responseMap = Transation
                 .exchangeData(IcsServer.getServer("@WEL_B"),
                 (Map)request,
-                TransationFactory.GDS469998);
+                TransationFactory.WEL485412);
         System.out.println(responseMap.get("TCusId"));
         System.out.println(responseMap.get("IdNo"));
 
