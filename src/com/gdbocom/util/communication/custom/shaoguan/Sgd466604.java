@@ -13,8 +13,9 @@ import com.gdbocom.util.communication.IcsServer;
 import com.gdbocom.util.communication.Transation;
 import com.gdbocom.util.communication.TransationFactory;
 
+
 /**
- * 福利彩票485404交易的报文配置类
+ * 韶关代收付466604交易的报文配置类
  * @author qm
  *
  */
@@ -80,9 +81,9 @@ public class Sgd466604 extends Transation {
             throws UnsupportedEncodingException {
     	
     	Object[][] format = {
-    			{"CLI_CODE", "18",FieldTypes.STATIC},
-                {"CLI_NAME", "40",FieldTypes.STATIC},
-                {"BUSCLA", "2",FieldTypes.STATIC},
+    			{"CLI_CODE", "18",FieldTypes.STATIC},//客户代码
+                {"CLI_NAME", "40",FieldTypes.STATIC},//客户姓名
+                {"BUSCLA", "2",FieldTypes.STATIC},//
                 {"AREACOD", "2",FieldTypes.STATIC},
                 {"CLI_UNIT_CODE", "6",FieldTypes.STATIC},
                 {"CLI_TRADE_FLAG", "2",FieldTypes.STATIC},

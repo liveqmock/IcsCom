@@ -1,4 +1,4 @@
-package com.gdbocom.util.communication.custom.shaoguan;
+﻿package com.gdbocom.util.communication.custom.shaoguan;
 
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
@@ -13,7 +13,7 @@ import com.gdbocom.util.communication.Transation;
 import com.gdbocom.util.communication.TransationFactory;
 
 /**
- * 福利彩票485404交易的报文配置类
+ * 韶关代收付466602交易的报文配置类
  * @author qm
  *
  */
@@ -23,7 +23,7 @@ public class Sgd466602 extends Transation {
             throws UnsupportedEncodingException {
 
         Object[][] format = {
-        		{"TXNCNL", "%-1s", "6"},
+        		{"TXNCNL", "%-1s", FieldSource.VAR},
         		{"CLI_IDENTITY_CARD",  "%-18s", FieldSource.VAR},
         };
         return Transation.packetSequence(request, format);
@@ -68,7 +68,7 @@ public class Sgd466602 extends Transation {
          request.put("FeCod", "466602");
 //         request.put("TxnSrc", "MB441");
          //报文体字段
-         request.put("CLI_IDENTITY_CARD", "3333444456666");
+         request.put("CLI_IDENTITY_CARD", "123789");
          Map responseMap = Transation.exchangeData(IcsServer.getServer("@SGD_A"),request,TransationFactory.SGD466602);
          
          

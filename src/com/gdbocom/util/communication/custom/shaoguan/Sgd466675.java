@@ -13,7 +13,7 @@ import com.gdbocom.util.communication.Transation;
 import com.gdbocom.util.communication.TransationFactory;
 
 /**
- * 福利彩票485404交易的报文配置类
+ * 韶关代收付466675交易的报文配置类
  * @author qm
  *
  */
@@ -36,12 +36,12 @@ public class Sgd466675 extends Transation {
 
         Object[][] format = {
                 {"CLI_CODE","18",FieldTypes.STATIC},               
-                {"CLI_NAME", "40", FieldTypes.STATIC},           //客户姓名
-                {"BUSCLA", "2", FieldTypes.STATIC},            //性别
-                {"AREACOD","2", FieldTypes.STATIC},              //年龄
-                {"CLI_UNIT_CODE", "6", FieldTypes.STATIC},           //客户级别
-                {"CLI_TRADE_FLAG", "2", FieldTypes.STATIC},          //客户状态
-                {"PZFLG", "3", FieldTypes.STATIC},   //家庭住址
+                {"CLI_NAME", "40", FieldTypes.STATIC},         
+                {"BUSCLA", "2", FieldTypes.STATIC},           
+                {"AREACOD","2", FieldTypes.STATIC},             
+                {"CLI_UNIT_CODE", "6", FieldTypes.STATIC},           
+                {"CLI_TRADE_FLAG", "2", FieldTypes.STATIC},          
+                {"PZFLG", "3", FieldTypes.STATIC},   
                 {"CLI_BANK_ACCOUNT","40",FieldTypes.STATIC},   //家庭电话
                 {"CLI_BANK_ACCNAM", "60", FieldTypes.STATIC},       //家庭邮编
                 {"CLI_TRADE_IDENT", "15", FieldTypes.STATIC},          //电子信箱
@@ -54,25 +54,24 @@ public class Sgd466675 extends Transation {
     public static void main(String[] args) throws UnknownHostException, IOException{
         Map request = new HashMap();
         //报文头字段
-        request.put("TTxnCd", "485404");
-        request.put("FeCod", "485404");
-        request.put("TxnSrc", "MB441");
+        request.put("TTxnCd", "466675");
+        request.put("FeCod", "466675");
         //报文体字段
-        request.put("CusNam", "BANKCOMM");
-        request.put("CrdNo", "6222600710007815865");
-        request.put("ActNo", "6222600710007815865");
-        request.put("IdTyp", "15");
-        request.put("IdNo", "44010419850301501X");
-        request.put("MobTel", "13570959854");
-        request.put("FixTel", "");
-        request.put("Email", "");
+        request.put("CLI_UNIT_CODE", "800000");
+        request.put("CLI_TRADE_FLAG", "68");
+        request.put("CLI_TRADE_IDENT", "123456789");
+        
 
-        Map responseMap = Transation
-                .exchangeData(IcsServer.getServer("@WEL_A"),
-                request,
-                TransationFactory.WEL485404);
-        System.out.println(responseMap.get("LotNam"));
-        /*System.out.println(responseMap.get("IdNo"));*/
+        Map responseMap = Transation.exchangeData(IcsServer.getServer("@SGD_A"),request,TransationFactory.SGD466676);
+        	
+        
+        if("E".equals(responseMap.get("MsgTyp"))){
+        	 System.out.println(responseMap+"=========="+responseMap.get("RspMsg"));
+        }else{
+        	
+        	System.out.println(responseMap+"1111=========");
 
+        	 System.out.println(responseMap.get("LotNam"));
+        }
     }
 }

@@ -13,7 +13,7 @@ import com.gdbocom.util.communication.Transation;
 import com.gdbocom.util.communication.TransationFactory;
 
 /**
- * 福利彩票485404交易的报文配置类
+ * 韶关代收付466603交易的报文配置类
  * @author qm
  *
  */
