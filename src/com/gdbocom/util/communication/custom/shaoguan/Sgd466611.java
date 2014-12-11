@@ -1,4 +1,4 @@
-package com.gdbocom.util.communication.custom.shaoguan;
+﻿package com.gdbocom.util.communication.custom.shaoguan;
 
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
@@ -12,11 +12,10 @@ import com.gdbocom.util.communication.FieldTypes;
 import com.gdbocom.util.communication.IcsServer;
 import com.gdbocom.util.communication.Transation;
 import com.gdbocom.util.communication.TransationFactory;
-//import com.gdbocom.util.format.FormatterInterface;
-//import com.gdbocom.util.format.WelFormatter;
+
 
 /**
- * 福利彩票485404交易的报文配置类
+ * 韶关代收付466611交易的报文配置类
  * @author qm
  *
  */
@@ -26,7 +25,7 @@ public class Sgd466611 extends Transation {
             throws UnsupportedEncodingException {
 
         Object[][] format = {
-        		{"TXNCNL", "%-1s", "6"},
+        		{"TXNCNL", "%-1s", FieldSource.VAR},
         		{"BUSTYPE",  "%-2s", FieldSource.VAR},
         		{"COMPNO",  "%-6s", FieldSource.VAR},
         		{"PAYFLG",  "%-18s", FieldSource.VAR},

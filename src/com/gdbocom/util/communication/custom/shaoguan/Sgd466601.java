@@ -1,4 +1,4 @@
-package com.gdbocom.util.communication.custom.shaoguan;
+﻿package com.gdbocom.util.communication.custom.shaoguan;
 
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
@@ -13,7 +13,7 @@ import com.gdbocom.util.communication.Transation;
 import com.gdbocom.util.communication.TransationFactory;
 
 /**
- * 福利彩票485404交易的报文配置类
+ * 韶关代收付466601交易的报文配置类
  * @author qm
  *
  */
@@ -24,7 +24,7 @@ public class Sgd466601 extends Transation {
 
         Object[][] format = {
         		
-        		{"TXNCNL", "%-1s", "6"},
+        		{"TXNCNL", "%-1s", FieldSource.VAR},
         		{"FUNFLG", "%-1s", FieldSource.VAR},           //客户级别
                 {"CLI_TYPE", "%-2s", FieldSource.VAR},          //客户状态
                 {"CLI_IDENTITY_CARD", "%-18s", FieldSource.VAR},   //家庭住址
@@ -89,35 +89,9 @@ public class Sgd466601 extends Transation {
 
     public static void main(String[] args) throws UnknownHostException, IOException{
     	 Map request = new HashMap();
-         //报文头字段
+        
          request.put("TTxnCd", "466601");
          request.put("FeCod", "466601");
-//         request.put("TxnSrc", "MB441");
-         //报文体字段
-//         {"TXNCNL", "%-1s", "6"},
-// 		{"FUNFLG", "%-1s", FieldSource.VAR},           //客户级别
-//         {"CLI_TYPE", "%-2s", FieldSource.VAR},          //客户状态
-//         {"CLI_IDENTITY_CARD", "%-18s", FieldSource.VAR},   //家庭住址
-//         {"CLI_NAME","%-40s",FieldSource.VAR},   //家庭电话
-//         {"CLI_SEX", "%-1s", FieldSource.VAR},       //家庭邮编
-//         {"CLI_AGE", "%-3s", FieldSource.VAR},          //电子信箱
-//         {"CLI_LEVEL", "%-1s", FieldSource.VAR},          //电子信箱
-//         {"CLI_STATUS", "%-1s", FieldSource.VAR},          //电子信箱
-//         {"CLI_HOME_ADDRESS", "%-40s", FieldSource.VAR},          //电子信箱
-//         {"CLI_HOME_TELEPHONE", "%-15s", FieldSource.VAR},          //电子信箱
-//         {"CLI_HOME_POST", "%-6s", FieldSource.VAR},          //电子信箱
-//         {"CLI_EMAIL", "%-40s", FieldSource.VAR},          //电子信箱
-//         {"CLI_HOMEPAGE", "%-40s", FieldSource.VAR},       //主页
-//         {"CLI_UNIT_NAME","%-40s",FieldSource.VAR},        //单位名称
-//         {"CLI_UNIT_ADRESS", "%-40s", FieldSource.VAR},    //单位地址
-//         {"CLI_UNIT_TELEPHONE", "%-15s", FieldSource.VAR}, //单位电话
-//         {"CLI_UNIT_POST", "%-6s", FieldSource.VAR},       //单位邮编
-//         {"CLI_MARROW_UNIT_NAME","%-40s",FieldSource.VAR}, //配偶姓名
-//         {"CLI_MARROW_NAME", "%-40s", FieldSource.VAR},    //配偶单位 名称
-//         {"CLI_MARROW_UNIT_ADDRESS", "%-40s", FieldSource.VAR},//配偶地址
-//         {"CLI_MARROW_UNIT_TELEPHONE", "%-15s", FieldSource.VAR},//配偶电话
-//         {"CLI_MARROW_UNIT_POST", "%-6s", FieldSource.VAR},    //配偶邮编
-//         {"CLI_MENO", "%-256s", FieldSource.VAR},
          request.put("FUNFLG", "0");
          request.put("CLI_TYPE", "01");
          request.put("CLI_IDENTITY_CARD", "3333444456645666");
@@ -128,12 +102,8 @@ public class Sgd466601 extends Transation {
          
          
          if("E".equals(responseMap.get("MsgTyp"))){
-         	 System.out.println(responseMap+"=========="+responseMap.get("RspMsg"));
          }else{
          	
-         	System.out.println(responseMap+"1111=========");
-
-         	 System.out.println(responseMap.get("LotNam"));
          }
          
 
