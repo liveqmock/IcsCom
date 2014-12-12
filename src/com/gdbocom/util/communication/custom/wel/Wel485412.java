@@ -50,7 +50,7 @@ public class Wel485412 extends Transation {
                 {"TmpDat","4",FieldTypes.STATIC},
                 {"ApCode", "2", FieldTypes.STATIC},
                 {"OFmtCd", "3", FieldTypes.STATIC},
-                {"TLogNo", "15", FieldTypes.STATIC},
+                {"TLogNo", "30", FieldTypes.STATIC},
                 {"Cipher", "30", FieldTypes.STATIC},
                 {"Verify", "30", FieldTypes.STATIC},
                 {"LotNam", "30", FieldTypes.STATIC},
@@ -70,7 +70,7 @@ public class Wel485412 extends Transation {
         request.put("CrdNo", "6222600710004688885");
         request.put("GameId", "5");
         request.put("PlayId", "1");
-        request.put("BetMod", "12");
+        request.put("BetMod", "1");
         request.put("BetMul", "1");
         request.put("BetAmt", "200");
         request.put("GrpNum", "2");
@@ -81,8 +81,7 @@ public class Wel485412 extends Transation {
                 .exchangeData(IcsServer.getServer("@WEL_B"),
                 (Map)request,
                 TransationFactory.WEL485412);
-        System.out.println(responseMap.get("TCusId"));
-        System.out.println(responseMap.get("IdNo"));
+        System.out.println(responseMap);
 
     }
 }

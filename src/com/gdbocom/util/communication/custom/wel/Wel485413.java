@@ -91,7 +91,7 @@ public class Wel485413 extends Transation{
                 {"TmpNam", "3",  FieldTypes.STATIC},
                 {"GameId", "2",  FieldTypes.STATIC},
                 {"PlayId", "5",  FieldTypes.STATIC},
-                {"TLogNo", "15", FieldTypes.STATIC},
+                {"TLogNo", "30", FieldTypes.STATIC},
                 {"DrawId", "5",  FieldTypes.STATIC},
                 {"KenoId", "5",  FieldTypes.STATIC},
                 {"BetMul", "3",  FieldTypes.STATIC},

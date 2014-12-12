@@ -87,7 +87,7 @@ System.out.println("response::"+new String(response, "GBK"));
             throws UnsupportedEncodingException {
         Object[][] format = {
                 {"TmpNam", "3",  FieldTypes.STATIC},
-                {"TLogNo", "15"  ,  FieldTypes.STATIC},
+                {"TLogNo", "30"  ,  FieldTypes.STATIC},
             	{"DrawId", "5"   ,  FieldTypes.STATIC},
             	{"KenoId", "5"   ,  FieldTypes.STATIC},
             	{"BetMul", "3"   ,  FieldTypes.STATIC},
