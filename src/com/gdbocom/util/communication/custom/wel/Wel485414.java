@@ -24,7 +24,7 @@ public class Wel485414 extends Transation{
 
         Object[][] format = {
                 {"CrdNo", "%-21", FieldSource.VAR},
-                {"BetTyp", "%-1", "0"},
+                {"BetTyp", "%-1", FieldSource.VAR},
                 {"BegDat", "%-8", FieldSource.VAR},
                 {"EndDat", "%-8", FieldSource.VAR},
         };
