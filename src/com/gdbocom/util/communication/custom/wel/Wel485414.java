@@ -23,6 +23,7 @@ public class Wel485414 extends Transation{
             throws UnsupportedEncodingException {
 
         Object[][] format = {
+                {"GameId", "%-2", FieldSource.VAR},
                 {"CrdNo", "%-21", FieldSource.VAR},
                 {"BetTyp", "%-1", FieldSource.VAR},
                 {"BegDat", "%-8", FieldSource.VAR},
@@ -107,10 +108,11 @@ System.out.println("response::"+new String(response, "GBK"));
         request.put("FeCod", "485414");
         request.put("TxnSrc", "MB441");
         //报文体字段
-        request.put("CrdNo", "6222600730002372142");
+        request.put("GameId", "5");
+        request.put("CrdNo", "60142890710180319");
         request.put("BetTyp", "0");
-        request.put("BegDat", "20141009");
-        request.put("EndDat", "20141009");
+        request.put("BegDat", "20141201");
+        request.put("EndDat", "20141231");
 
         Map responseMap = Transation
                 .exchangeData(IcsServer.getServer("@WEL_B"),
