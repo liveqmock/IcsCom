@@ -89,6 +89,7 @@ System.out.println("response::"+new String(response, "GBK"));
         Object[][] format = {
                 {"TmpNam", "3",  FieldTypes.STATIC},
                 {"TLogNo", "30"  ,  FieldTypes.STATIC},
+            	{"PlayId", "5"   ,  FieldTypes.STATIC},
             	{"DrawId", "5"   ,  FieldTypes.STATIC},
             	{"KenoId", "5"   ,  FieldTypes.STATIC},
             	{"BetMul", "3"   ,  FieldTypes.STATIC},
