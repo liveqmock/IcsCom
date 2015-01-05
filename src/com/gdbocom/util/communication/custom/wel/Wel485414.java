@@ -109,11 +109,13 @@ System.out.println("response::"+new String(response, "GBK"));
         request.put("FeCod", "485414");
         request.put("TxnSrc", "MB441");
         //报文体字段
-        request.put("GameId", "5");
-        request.put("CrdNo", "60142890710180319");
+        //request.put("GameId", "5");//双色球
+        request.put("GameId", "7");//快乐十分
+        //request.put("CrdNo", "60142890710180319");//双色球
+        request.put("CrdNo", "6222600710009621634");//快乐十分
         request.put("BetTyp", "0");
-        request.put("BegDat", "20141201");
-        request.put("EndDat", "20141231");
+        request.put("BegDat", "19000101");
+        request.put("EndDat", "20991231");
 
         Map responseMap = Transation
                 .exchangeData(IcsServer.getServer("@WEL_B"),
