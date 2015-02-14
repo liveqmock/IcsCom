@@ -96,6 +96,7 @@ System.out.println("response::"+new String(response, "GBK"));
             	{"BetLin", "128" ,  FieldTypes.STATIC},
             	{"BetMod", "5"   ,  FieldTypes.STATIC},
             	{"PrzAmt", "15"  ,  FieldTypes.STATIC},
+                {"DrawNm", "15"  ,  FieldTypes.STATIC},
         };
         int headLenLength = 3;
         return Transation.unpacketLoop(loopOffset, headLenLength, response, format);

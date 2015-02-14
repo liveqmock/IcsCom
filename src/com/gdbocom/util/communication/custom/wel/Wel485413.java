@@ -98,6 +98,7 @@ public class Wel485413 extends Transation{
                 {"BetMul", "3",  FieldTypes.STATIC},
                 {"BetAmt", "15", FieldTypes.STATIC},
                 {"BetLin", "128",FieldTypes.STATIC},
+                {"DrawNm", "15",FieldTypes.STATIC},
         };
         int headLenLength = 3;
         return Transation.unpacketLoop(loopOffset, headLenLength, response, format);

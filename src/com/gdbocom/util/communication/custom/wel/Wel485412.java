@@ -55,6 +55,7 @@ public class Wel485412 extends Transation {
                 {"Verify", "30", FieldTypes.STATIC},
                 {"LotNam", "30", FieldTypes.STATIC},
                 {"LotBal", "18", FieldTypes.STATIC},
+                {"DrawNm", "15", FieldTypes.STATIC},
         };
         return Transation.unpacketsSequence(response, format);
 
