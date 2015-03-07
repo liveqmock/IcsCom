@@ -3,6 +3,7 @@ package com.gdbocom.util.communication;
 import com.gdbocom.util.communication.custom.gds.*;
 import com.gdbocom.util.communication.custom.wel.*;
 import com.gdbocom.util.communication.custom.shaoguan.*;
+import com.gdbocom.util.communication.custom.efek.*;
 
 /**
  * Transation的简单工厂类，同时用于登记各个不同的Transation实现类，
@@ -66,6 +67,14 @@ public class TransationFactory {
     public static final int SGD466675 = 28;
     /** SGD应用的466675交易的代号 */
     public static final int SGD466676 = 29;
+    /** EFEK应用的460410交易的代号 */
+    public static final int EFEK460410 = 30;
+    /** EFEK应用的460411交易的代号 */
+    public static final int EFEK460411 = 31;
+    /** EFEK应用的460443交易的代号 */
+    public static final int EFEK460443 = 32;
+    /** EFEK应用的460430交易的代号 */
+    public static final int EFEK460430 = 33;
 
     /**
      * 根据不同的交易代号，返回不同的拼解包类。
@@ -99,6 +108,10 @@ public class TransationFactory {
             case TransationFactory.SGD466672: return new Sgd466672();
             case TransationFactory.SGD466675: return new Sgd466675();
             case TransationFactory.SGD466676: return new Sgd466676();
+            case TransationFactory.EFEK460410: return new Efek460410();
+            case TransationFactory.EFEK460411: return new Efek460411();
+            case TransationFactory.EFEK460443: return new Efek460443();
+            case TransationFactory.EFEK460430: return new Efek460430();
             default: throw new IllegalArgumentException();
         }
     }
