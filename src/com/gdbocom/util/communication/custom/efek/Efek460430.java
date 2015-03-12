@@ -24,30 +24,30 @@ public class Efek460430 extends Transation {
             throws UnsupportedEncodingException {
 
         Object[][] format = {
-        		{"Func", "%-1s", FieldTypes.STATIC},
-        		{"DWBM", "%-8s", FieldTypes.STATIC},
-        		{"JFH", "%-20s", FieldTypes.STATIC},
-        		{"JSHMC", "%-64s", FieldTypes.STATIC},
-        		{"YQYYHDM", "%-4s", FieldTypes.STATIC},
-        		{"YQYZH", "%-32s", FieldTypes.STATIC},
-        		{"YQYZHMC", "%-128s", FieldTypes.STATIC},
-        		{"XQYZH", "%-32s", FieldTypes.STATIC},
-        		{"XQYZHMC", "%-128s", FieldTypes.STATIC},
-        		{"ActFlg", "%-1s", FieldTypes.STATIC},
-        		{"IdTyp", "%-2s", FieldTypes.STATIC},
-        		{"ZJHM", "%-32s", FieldTypes.STATIC},
-        		{"LXDH", "%-20s", FieldTypes.STATIC},
-        		{"SJHM", "%-20s", FieldTypes.STATIC},
-        		{"EMAIL", "%-64s", FieldTypes.STATIC},
-        		{"BZ", "%-128s", FieldTypes.STATIC},
-        		{"QYZT", "%-1s", FieldTypes.STATIC},
-        		{"VchTyp", "%-3s", FieldTypes.STATIC},
-        		{"VchCod", "%-8s", FieldTypes.STATIC},
-        		{"ActSqn", "%-5s", FieldTypes.STATIC},
-        		{"Pswd", "%-20s", FieldTypes.STATIC},
-        		{"PfaSub", "%-3s", FieldTypes.STATIC},
-        		{"BCusId", "%-18s", FieldTypes.STATIC},
-        		{"PayCod", "%-30s", FieldTypes.STATIC},
+        		{"Func", "%-1s", FieldSource.VAR},
+        		{"DWBM", "%-8s", FieldSource.VAR},
+        		{"JFH", "%-20s", FieldSource.VAR},
+        		{"JSHMC", "%-64s", FieldSource.VAR},
+        		{"YQYYHDM", "%-4s", FieldSource.VAR},
+        		{"YQYZH", "%-32s", FieldSource.VAR},
+        		{"YQYZHMC", "%-128s", FieldSource.VAR},
+        		{"XQYZH", "%-32s", FieldSource.VAR},
+        		{"XQYZHMC", "%-128s", FieldSource.VAR},
+        		{"ActFlg", "%-1s", FieldSource.VAR},
+        		{"IdTyp", "%-2s", FieldSource.VAR},
+        		{"ZJHM", "%-32s", FieldSource.VAR},
+        		{"LXDH", "%-20s", FieldSource.VAR},
+        		{"SJHM", "%-20s", FieldSource.VAR},
+        		{"EMAIL", "%-64s", FieldSource.VAR},
+        		{"BZ", "%-128s", FieldSource.VAR},
+        		{"QYZT", "%-1s", FieldSource.VAR},
+        		{"VchTyp", "%-3s", FieldSource.VAR},
+        		{"VchCod", "%-8s", FieldSource.VAR},
+        		{"ActSqn", "%-5s", FieldSource.VAR},
+        		{"Pswd", "%-20s", FieldSource.VAR},
+        		{"PfaSub", "%-3s", FieldSource.VAR},
+        		{"BCusId", "%-18s", FieldSource.VAR},
+        		{"PayCod", "%-30s", FieldSource.VAR},
         };
         return Transation.packetSequence(request, format);
     }
@@ -57,9 +57,6 @@ public class Efek460430 extends Transation {
             throws UnsupportedEncodingException {
 
         Object[][] format = {
-                {"TmpDat","4",FieldTypes.STATIC},
-                {"ApCode", "2", FieldTypes.STATIC},
-                {"OFmtCd", "3", FieldTypes.STATIC},
         };
         return Transation.unpacketsSequence(response, format);
 
@@ -72,27 +69,27 @@ public class Efek460430 extends Transation {
         request.put("FeCod", "460430");
         request.put("TxnSrc", "MB441");
         //报文体字段
-        request.put("Func", "");
-        request.put("DWBM", "");
-        request.put("JFH", "");
-        request.put("JSHMC", "");
+        request.put("Func", "0");//0增加；1修改；2查询；3删除
+        request.put("DWBM", "032025");
+        request.put("JFH", "0320009900178466");
+        request.put("JSHMC", "林金华");
         request.put("YQYYHDM", "");
         request.put("YQYZH", "");
         request.put("YQYZHMC", "");
-        request.put("XQYZH", "");
-        request.put("XQYZHMC", "");
-        request.put("ActFlg", "");
-        request.put("IdTyp", "");
-        request.put("ZJHM", "");
-        request.put("LXDH", "");
-        request.put("SJHM", "");
+        request.put("XQYZH", "60142890710180319");
+        request.put("XQYZHMC", "杨立文");
+        request.put("ActFlg", "4");
+        request.put("IdTyp", "15");
+        request.put("ZJHM", "440528197203072416");
+        request.put("LXDH", "82110517");
+        request.put("SJHM", "13632394114");
         request.put("EMAIL", "");
         request.put("BZ", "");
-        request.put("QYZT", "");
+        request.put("QYZT", "0");
         request.put("VchTyp", "");
         request.put("VchCod", "");
         request.put("ActSqn", "");
-        request.put("Pswd", "");
+        request.put("Pswd", "1234567890");
         request.put("PfaSub", "");
         request.put("BCusId", "");
         request.put("PayCod", "");

@@ -487,6 +487,72 @@ public abstract class Transation {
         return loopBody;
     }
 
+    /**
+     * 多记录报文解析方法，同时将编码由ICS的GBK编码转换成Unicode编码
+     * 适用于没有指明单循环体长度的情况
+     * 
+     * @param sequenceOffset
+     *            在循环语句前的字段长度
+     * @param headLen
+     *            循环报文记录数长度
+     * @param response
+     *            需解析报文
+     * @param format
+     *            解析格式
+     * 
+     *            key:关键字, 字段长度, [FieldTypes]：字段类型,
+     * 
+     * @return 报文项
+     * @throws UnsupportedEncodingException
+     */
+    protected static Map unpacketFixedOneLoop(
+    		int sequenceOffset,
+    		int oneLoopLength,
+    		byte[] response,
+    		Object[][] format)
+            throws UnsupportedEncodingException {
+
+    	//去除循环体前面部分
+    	int loopResponseLength = response.length - sequenceOffset;
+    	//判断是否记录为空
+    	if(0==loopResponseLength){
+            Map emptyBody = new HashMap();
+            emptyBody.put("LoopCnt", new Integer(0));
+            return emptyBody;
+
+    	}
+    	byte[] loopResponse = new byte[loopResponseLength];
+    	System.arraycopy(response, sequenceOffset, loopResponse, 0, loopResponseLength);
+    	
+
+    	//保存所有循环体
+    	List records = new ArrayList();
+
+        
+//        //获取循环体前的headlen值，即每循环体长度，实际循环体长度还需要在headlen值上+headLenLength
+//        byte[] headLenValue = new byte[headLenLength];
+//        System.arraycopy(loopResponse, 0, headLenValue, 0, headLenLength);
+//        //循环体长度数值
+//        int headLen = Integer.parseInt(new String(headLenValue, "GBK"));
+//
+//        //一个循环体+headLenLength的长度
+//		int oneLoopLength = headLen+headLenLength;
+        //一个循环体字节流
+        byte[] oneLoop = new byte[oneLoopLength];
+        int loopCnt = 0;
+        for(int offset=0;offset<loopResponseLength; offset+=oneLoopLength, loopCnt++){
+        	System.arraycopy(loopResponse, offset, oneLoop, 0, oneLoopLength);
+        	wasteLog.Write("单个循环体:"+new String(oneLoop, "GBK"));
+        	records.add(Transation.unpacketsSequence(oneLoop, format));
+        	wasteLog.Write("接拆后的单个循环体:\n"+records);
+        }
+
+        Map loopBody = new HashMap();
+        loopBody.put("LoopBody", records);
+        loopBody.put("LoopCnt", new Integer(loopCnt));
+        return loopBody;
+    }
+
     protected static Map unpacketTdLoop(
     		int sequenceOffset,
     		byte[] response,

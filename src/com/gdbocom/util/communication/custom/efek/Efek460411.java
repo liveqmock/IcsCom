@@ -60,17 +60,17 @@ public class Efek460411 extends Transation {
                 {"TmpDat","4",FieldTypes.STATIC},
                 {"ApCode", "2", FieldTypes.STATIC},
                 {"OFmtCd", "3", FieldTypes.STATIC},
-                {"TckNo", "%-11s", FieldTypes.STATIC},
-                {"JYLSH", "%-24s", FieldTypes.STATIC},
-                {"JYRQ", "%-8s", FieldTypes.STATIC},
-                {"JYSJ", "%-6s", FieldTypes.STATIC},
-                {"YJYLSH", "%-24s", FieldTypes.STATIC},
-                {"YJYRQ", "%-8s", FieldTypes.STATIC},
-                {"YJYSJ", "%-6s", FieldTypes.STATIC},
-                {"JFH", "%-20s", FieldTypes.STATIC},
-                {"DFNY", "%-6s", FieldTypes.STATIC},
-                {"SKJE", "%-16s", FieldTypes.STATIC},
-                {"JFJGSM", "%-128s", FieldTypes.STATIC},
+                {"TckNo", "11", FieldTypes.STATIC},
+                {"JYLSH", "24", FieldTypes.STATIC},
+                {"JYRQ", "8", FieldTypes.STATIC},
+                {"JYSJ", "6", FieldTypes.STATIC},
+                {"YJYLSH", "24", FieldTypes.STATIC},
+                {"YJYRQ", "8", FieldTypes.STATIC},
+                {"YJYSJ", "6", FieldTypes.STATIC},
+                {"JFH", "20", FieldTypes.STATIC},
+                {"DFNY", "6", FieldTypes.STATIC},
+                {"SKJE", "16", FieldTypes.STATIC},
+                {"JFJGSM", "128", FieldTypes.STATIC},
         };
         return Transation.unpacketsSequence(response, format);
 
@@ -83,30 +83,30 @@ public class Efek460411 extends Transation {
         request.put("FeCod", "460411");
         request.put("TxnSrc", "MB441");
         //报文体字段
-		request.put("SFFS", "");
-		request.put("FYLX", "");
-		request.put("DWBM", "");
-		request.put("JFH", "");
-		request.put("KKYHDM", "");
-		request.put("BFJFBZ", "");
-		request.put("ZWLSH", "");
-		request.put("DFNY", "");
-		request.put("QFJE", "");
-		request.put("BJ", "");
-		request.put("WYJ", "");
-		request.put("FKFS", "");
-		request.put("SKJE", "");
-		request.put("ActFlg", "");
+		request.put("SFFS", "110");//
+		request.put("FYLX", "010");
+		request.put("DWBM", "032025");
+		request.put("JFH", "0320009900178466");
+		request.put("KKYHDM", "301");
+		request.put("BFJFBZ", "1");
+		request.put("ZWLSH", "1000000013185399");
+		request.put("DFNY", "201502");
+		request.put("QFJE", "76337");
+		request.put("BJ", "76337");
+		request.put("WYJ", "0");
+		request.put("FKFS", "2");//2非现金
+		request.put("SKJE", "76337");
+		request.put("ActFlg", "4");//卡
 		request.put("AVchTp", "");
 		request.put("VchCod", "");
-		request.put("BokAct", "");
-		request.put("KKZHMC", "");
+		request.put("BokAct", "60142890710180319");
+		request.put("KKZHMC", "杨立文");
 		request.put("BActSq", "");
 		request.put("RvsNo", "");
 		request.put("VchTyp", "");
 		request.put("VchNo", "");
 		request.put("BilDat", "");
-		request.put("PinBlk", "");
+		request.put("PinBlk", "12345678910");
 
         Map responseMap = Transation
                 .exchangeData(IcsServer.getServer("@EFEK"),

@@ -37,17 +37,17 @@ public class Efek460443 extends Transation {
                 {"TmpDat","4",FieldTypes.STATIC},
                 {"ApCode", "2", FieldTypes.STATIC},
                 {"OFmtCd", "3", FieldTypes.STATIC},
-                {"DWBM", "%-8s", FieldTypes.STATIC},
-                {"JFH", "%-20s", FieldTypes.STATIC},
-                {"JSHMC", "%-64s", FieldTypes.STATIC},
-                {"YDDZ", "%-128s", FieldTypes.STATIC},
-                {"QYZT", "%-1s", FieldTypes.STATIC},
-                {"YQYYHDM", "%-4s", FieldTypes.STATIC},
-                {"YQYZH", "%-32s", FieldTypes.STATIC},
-                {"YQYZHMC", "%-128s", FieldTypes.STATIC},
-                {"YJYRQ", "%-8s", FieldTypes.STATIC},
-                {"YJYSJ", "%-6s", FieldTypes.STATIC},
-                {"BZ", "%-128s", FieldTypes.STATIC},
+                {"DWBM", "8", FieldTypes.STATIC},
+                {"JFH", "20", FieldTypes.STATIC},
+                {"JSHMC", "64", FieldTypes.STATIC},
+                {"YDDZ", "128", FieldTypes.STATIC},
+                {"QYZT", "1", FieldTypes.STATIC},
+                {"YQYYHDM", "4", FieldTypes.STATIC},
+                {"YQYZH", "32", FieldTypes.STATIC},
+                {"YQYZHMC", "128", FieldTypes.STATIC},
+                {"YJYRQ", "8", FieldTypes.STATIC},
+                {"YJYSJ", "6", FieldTypes.STATIC},
+                {"BZ", "128", FieldTypes.STATIC},
         };
         return Transation.unpacketsSequence(response, format);
 
@@ -56,11 +56,11 @@ public class Efek460443 extends Transation {
     public static void main(String[] args) throws UnknownHostException, IOException{
         Map request = new HashMap();
         //报文头字段
-        request.put("TTxnCd", "460411");
-        request.put("FeCod", "460411");
+        request.put("TTxnCd", "460443");
+        request.put("FeCod", "460443");
         request.put("TxnSrc", "MB441");
         //报文体字段
-		request.put("JFH", "");
+		request.put("JFH", "0320009900178466");
 
         Map responseMap = Transation
                 .exchangeData(IcsServer.getServer("@EFEK"),

@@ -47,7 +47,7 @@ public class Efek460410 extends Transation {
         		this.parseLoopResponseBody(response, loopOffset)
         		);
         
-        wasteLog.Write("接拆完毕的整体报文字段：\n"+responseData);
+        //wasteLog.debug("接拆完毕的整体报文字段：\n"+responseData);
         
         return responseData;
 
@@ -95,8 +95,8 @@ public class Efek460410 extends Transation {
         		{"BJ", "16",  FieldTypes.STATIC},
         		{"WYJ", "16",  FieldTypes.STATIC},
         };
-        int headLenLength = 0;
-        return Transation.unpacketLoop(loopOffset, headLenLength, response, format);
+        int oneLoopLength = 106;
+        return Transation.unpacketFixedOneLoop(loopOffset, oneLoopLength, response, format);
 
     }
 
@@ -107,7 +107,7 @@ public class Efek460410 extends Transation {
         request.put("FeCod", "460410");
         request.put("TxnSrc", "MB441");
         //报文体字段
-        request.put("JFH", "0320009900408610");
+        request.put("JFH", "0320009900178466");
         request.put("DFNY", "");//留空为查询全部
         //request.put("DFNY", "201412");
         request.put("CXFS", "0");//0：查询所有；1：单月欠费
